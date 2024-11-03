@@ -76,3 +76,50 @@ CREATE TABLE "player_valuations" (
     PRIMARY KEY ("player_id", "datetime"),
     FOREIGN KEY ("player_id") REFERENCES "players"("player_id")
 );
+
+CREATE TABLE "clubs" (
+    "club_id" INTEGER NOT NULL,
+    "club_code" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255) NOT NULL,
+    "domestic_competition" VARCHAR(255),
+    "total_market_value" VARCHAR(255),
+    "squad_size" INTEGER,
+    "average_age" DECIMAL,
+    "foreigners_number" INTEGER,
+    "foreigners_percent" DECIMAL,
+    "national_team_players" INTEGER,
+    "stadium_name" VARCHAR(255),
+    "stadium_seats" INTEGER,
+    "net_transfer_record" VARCHAR(255),
+    "coach_name" VARCHAR(255),
+    "url" VARCHAR(255)
+);
+
+ALTER TABLE "clubs" 
+    ADD PRIMARY KEY ("club_id");
+
+CREATE TABLE "club_games" (
+    "game_id" INTEGER NOT NULL,
+    "club_id" INTEGER NOT NULL,
+    "own_goals" INTEGER,
+    "own_position" INTEGER,
+    "own_manager_name" VARCHAR(255),
+    "opponent_id" INTEGER NOT NULL,
+    "opponent_goals" INTEGER,
+    "opponent_position" INTEGER,
+    "opponent_manager_name" VARCHAR(255),
+    "hosting" VARCHAR(255),
+    "is_win" BOOLEAN
+);
+
+ALTER TABLE "club_games" 
+    ADD PRIMARY KEY ("game_id","opponent_id","hosting");
+
+ALTER TABLE "club_games" 
+    ADD CONSTRAINT "club_games_club_id_foreign" FOREIGN KEY ("club_id") REFERENCES "clubs"("club_id");
+
+ALTER TABLE "club_games" 
+    ADD CONSTRAINT "club_games_opponent_id_foreign" FOREIGN KEY ("opponent_id") REFERENCES "clubs"("club_id");
+
+ALTER TABLE "club_games" 
+    ADD CONSTRAINT "club_games_game_id_foreign" FOREIGN KEY ("game_id") REFERENCES "games"("game_id");
