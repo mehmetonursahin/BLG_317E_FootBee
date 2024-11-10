@@ -136,3 +136,36 @@ ALTER TABLE "club_games"
 
 ALTER TABLE "club_games" 
     ADD CONSTRAINT "club_games_game_id_foreign" FOREIGN KEY ("game_id") REFERENCES "games"("game_id");
+
+
+CREATE TABLE "appearances"(
+    "appearance_id" VARCHAR(255) NOT NULL,
+    "game_id" INTEGER NOT NULL,
+    "player_id" INTEGER NOT NULL,
+    "player_club_id" INTEGER NOT NULL,
+    "player_current_club_id" INTEGER NOT NULL,
+    "date" DATE NULL DEFAULT 'DEFAULT CURRENT_DATE',
+    "player_name" VARCHAR(100) NULL,
+    "competition_id" VARCHAR(10) NOT NULL,
+    "yellow_cards" INTEGER NOT NULL,
+    "red_cards" INTEGER NOT NULL,
+    "goals" INTEGER NOT NULL,
+    "assists" INTEGER NOT NULL,
+    "minutes_played" INTEGER NOT NULL,
+    PRIMARY KEY("appearance_id"),
+    FOREIGN KEY("game_id") REFERENCES "games"("game_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("player_id") REFERENCES "players"("player_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("player_club_id") REFERENCES "clubs"("club_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("player_current_club_id") REFERENCES "clubs"("club_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("competition_id") REFERENCES "competitions"("competition_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
