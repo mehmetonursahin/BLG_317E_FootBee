@@ -8,11 +8,22 @@ CREATE TABLE "game_events"(
     "club_id" INTEGER NOT NULL,
     "player_id" INTEGER NOT NULL,
     "description" TEXT NULL,
-    "player_in_id" INTEGER NULL
-);
-ALTER TABLE
-    "game_events" ADD PRIMARY KEY("game_id","minute","player_id");
+    "player_in_id" INTEGER NULL,
 
+    PRIMARY KEY("game_id","minute","player_id"),
+    FOREIGN KEY("game_id") REFERENCES "games"("game_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("club_id") REFERENCES "clubs"("club_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("player_id") REFERENCES "players"("player_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY("player_in_id") REFERENCES "players"("player_id")
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
 CREATE TABLE "games"(
     "game_id" INTEGER NOT NULL,
     "competition_id" VARCHAR(10) NOT NULL,
@@ -34,13 +45,15 @@ CREATE TABLE "games"(
     "home_club_name" VARCHAR(100) NULL,
     "away_club_name" VARCHAR(100) NULL,
     "aggregate" VARCHAR(10) NOT NULL,
-    "competition_type" VARCHAR(50) NOT NULL
+    "competition_type" VARCHAR(50) NOT NULL,
+    PRIMARY KEY("game_id"),
+    FOREIGN KEY ("home_club_id") REFERENCES "clubs"("club_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY ("away_club_id") REFERENCES "clubs"("club_id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
-ALTER TABLE
-    "games" ADD PRIMARY KEY("game_id");
-ALTER TABLE
-    "games" ADD CONSTRAINT "games_game_id_foreign" FOREIGN KEY("game_id") REFERENCES "game_events"("game_id");
-
 CREATE TABLE "players" (
     "player_id" INTEGER PRIMARY KEY,
     "first_name" VARCHAR(50) NOT NULL,
