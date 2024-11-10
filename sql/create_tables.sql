@@ -123,3 +123,19 @@ ALTER TABLE "club_games"
 
 ALTER TABLE "club_games" 
     ADD CONSTRAINT "club_games_game_id_foreign" FOREIGN KEY ("game_id") REFERENCES "games"("game_id");
+
+
+CREATE TABLE "competitions"(
+    "competition_id" VARCHAR(10) NOT NULL,
+    "competition_code" VARCHAR(50) NOT NULL,
+    "name" VARCHAR(100) NOT NULL,
+    "sub_type" VARCHAR(50) NOT NULL,
+    "type" VARCHAR(50) NOT NULL,
+    "country_name" VARCHAR(50) NULL,
+    "domestic_league_code" VARCHAR(10) NULL,
+    "confederation" VARCHAR(50) NOT NULL,
+    "url" VARCHAR(255) NOT NULL
+);
+ALTER TABLE
+    "competitions" ADD PRIMARY KEY("competition_id");
+
