@@ -8,7 +8,10 @@ def create_app():
     app.config.from_object("settings")
     
     app.add_url_rule("/", view_func=views.home_page)
-    
+    app.add_url_rule("/clubs", view_func=views.clubs_page)
+    app.add_url_rule("/players", view_func=views.players_page)
+    app.add_url_rule("/games", view_func=views.games_page)
+    app.add_url_rule("/competitions", view_func=views.competitions_page)
     return app
 
 

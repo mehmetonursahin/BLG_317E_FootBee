@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+    <div class="container">
+        <h2>Clubs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Competition</th>
+                    <th>Market Value</th>
+                    <th>Squad Size</th>
+                    <th>Stadium</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for club in clubs %}
+                <tr>
+                    <td>{{ club.id }}</td>
+                    <td>{{ club.name }}</td>
+                    <td>{{ club.competition }}</td>
+                    <td>{{ club.market_value }}</td>
+                    <td>{{ club.squad_size }}</td>
+                    <td>{{ club.stadium }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

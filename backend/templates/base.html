@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footbee Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="navbar-menu">
+                <li><a href="{{ url_for('home_page') }}">Home</a></li>
+                <li><a href="{{ url_for('clubs_page') }}">Clubs</a></li>
+                <li><a href="{{ url_for('players_page') }}">Players</a></li>
+                <li><a href="{{ url_for('games_page') }}">Games</a></li>
+                <li><a href="{{ url_for('competitions_page') }}">Competitions</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Footbee. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
