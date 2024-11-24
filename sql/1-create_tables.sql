@@ -1,3 +1,4 @@
+DROP DATABASE footbee;
 CREATE DATABASE footbee;
 USE footbee;
 
@@ -37,8 +38,8 @@ CREATE TABLE games(
     season INTEGER NOT NULL,
     round VARCHAR(50) NOT NULL,
     date DATETIME NOT NULL,
-    home_club_id INTEGER NOT NULL FOREIGN KEY,
-    away_club_id INTEGER NOT NULL FOREIGN KEY,
+    home_club_id INTEGER NOT NULL,
+    away_club_id INTEGER NOT NULL,
     home_club_goals INTEGER NOT NULL DEFAULT '0',
     away_club_goals INTEGER NOT NULL DEFAULT '0',
     home_club_position INTEGER NOT NULL,
@@ -66,20 +67,20 @@ CREATE TABLE games(
 
 CREATE TABLE players (
     player_id INTEGER PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50),
     last_name VARCHAR(50) NOT NULL,
     last_season INTEGER,
-    current_club_id INTEGER FOREIGN KEY,
+    current_club_id INTEGER ,
     player_code VARCHAR(100) NOT NULL,
     country_of_birth VARCHAR(50) NOT NULL,
     city_of_birth VARCHAR(50) NOT NULL,
     country_of_citizenship VARCHAR(50) NOT NULL,
-    date_of_birth DATE NOT NULL,
-    sub_position VARCHAR(50) NOT NULL,
+    date_of_birth DATETIME ,
+    sub_position VARCHAR(50),
     position VARCHAR(50) NOT NULL,
     foot ENUM('NotIndicated', 'Left', 'Right', 'Both') NOT NULL,
     height_in_cm INTEGER,
-    contract_expiration_date DATE,
+    contract_expiration_date DATETIME,
     agent_name VARCHAR(100),
     image_url VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL,
@@ -90,15 +91,14 @@ CREATE TABLE players (
 );
 
 CREATE TABLE game_events(
-    game_id INTEGER NOT NULL FOREIGN KEY,
+    game_event_id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INTEGER NOT NULL,
     minute INTEGER NOT NULL,
     type ENUM('Substitutions', 'Goals') NOT NULL,
-    club_id INTEGER NOT NULL FOREIGN KEY,
-    player_id INTEGER NOT NULL FOREIGN KEY,
+    club_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
     description TEXT NULL,
-    player_in_id INTEGER NULL FOREIGN KEY,
-
-    PRIMARY KEY(game_id,minute,player_id),
+    player_in_id INTEGER NULL,
 
     FOREIGN KEY(game_id) REFERENCES games(game_id)
     ON DELETE CASCADE
@@ -118,10 +118,10 @@ CREATE TABLE game_events(
 );
 
 CREATE TABLE player_valuations (
-    player_id INTEGER FOREIGN KEY,
+    player_id INTEGER,
     datetime DATETIME,
     market_value_in_eur INTEGER NOT NULL,
-    highest_market_value_in_eur INTEGER NOT NULL,
+    highest_market_value_in_eur INTEGER,
     current_club_id INTEGER NOT NULL,
 
     PRIMARY KEY (player_id, datetime),
@@ -132,17 +132,19 @@ CREATE TABLE player_valuations (
 );
 
 CREATE TABLE club_games (
-    game_id INTEGER NOT NULL FOREIGN KEY,
-    club_id INTEGER NOT NULL FOREIGN KEY,
+    game_id INTEGER NOT NULL,
+    club_id INTEGER NOT NULL,
     own_goals INTEGER,
     own_position INTEGER,
     own_manager_name VARCHAR(255),
-    opponent_id INTEGER NOT NULL FOREIGN KEY,
+    opponent_id INTEGER NOT NULL,
     opponent_goals INTEGER,
     opponent_position INTEGER,
     opponent_manager_name VARCHAR(255),
     hosting VARCHAR(255),
     is_win BOOLEAN
+    
+    ,
 
     PRIMARY KEY (game_id,opponent_id,hosting),
 
@@ -155,25 +157,27 @@ CREATE TABLE club_games (
     ON UPDATE CASCADE,
 
     FOREIGN KEY (game_id) REFERENCES games(game_id)
-    ON DELETE SET NULL
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 );
 
 CREATE TABLE appearances(
     appearance_id VARCHAR(255) NOT NULL,
-    game_id INTEGER NOT NULL FOREIGN KEY,
-    player_id INTEGER NOT NULL FOREIGN KEY,
-    player_club_id INTEGER NOT NULL FOREIGN KEY,
-    player_current_club_id INTEGER NOT NULL FOREIGN KEY,
-    date DATE NULL DEFAULT CURRENT_TIMESTAMP,
+    game_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
+    player_club_id INTEGER NOT NULL,
+    player_current_club_id INTEGER NOT NULL,
+    date DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
     player_name VARCHAR(100) NULL,
-    competition_id VARCHAR(10) NOT NULL FOREIGN KEY,
+    competition_id VARCHAR(10) NOT NULL,
     yellow_cards INTEGER NOT NULL,
     red_cards INTEGER NOT NULL,
     goals INTEGER NOT NULL,
     assists INTEGER NOT NULL,
     minutes_played INTEGER NOT NULL,
-    PRIMARY KEY(appearance_id),
+    PRIMARY KEY(appearance_id)
+    
+    ,
 
     FOREIGN KEY(game_id) REFERENCES games(game_id)
     ON DELETE CASCADE
