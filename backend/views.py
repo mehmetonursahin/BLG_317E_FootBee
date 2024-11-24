@@ -1,6 +1,8 @@
 from flask import render_template, current_app
 from datetime import datetime
 
+from app import get_db_connection
+
 # Example data for each page
 clubs_data = [
     {"id": 1, "name": "Arsenal", "competition": "EPL", "market_value": "€800M", "squad_size": 25, "stadium": "Emirates Stadium"},
@@ -62,7 +64,21 @@ def home_page():
 def clubs_page():
     return render_template("clubs.html", clubs=clubs_data)
 
-def players_page():
+def players_page(): 
+    """try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM players")
+        players = cursor.fetchall()
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        return f"Error fetching players: {e}", 500
+    
+    if not players:
+        return render_template("player.html", players=players_data) """
+    
+    #The following line will send "players" as a parameter. Since remaining codes should be edited before doing so, players_data is sent for now.
     return render_template("player.html", players=players_data)
 
 def games_page():
