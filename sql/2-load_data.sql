@@ -1,5 +1,5 @@
 -- In order to load data with foreign checks, comment following line
-SET foreign_key_checks = 0;
+SET foreign_key_checks = 1;
 
 
 LOAD DATA INFILE 'sql/dataset/competitions.csv'
@@ -180,7 +180,10 @@ SET
  club_id = NULLIF(@club_id, ''),
  player_id = NULLIF(@player_id, ''),
  description = NULLIF(@description, ''),
- player_in_id = NULLIF(@player_in_id, '');
+  player_in_id = CASE
+    WHEN @player_in_id = '' OR @player_in_id NOT REGEXP '^[0-9]+$' THEN NULL
+    ELSE @player_in_id
+  END;
 
 LOAD DATA INFILE 'sql/dataset/player_valuations.csv'
 INTO TABLE player_valuations
