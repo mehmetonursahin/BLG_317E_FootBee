@@ -4,6 +4,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Install system dependencies
+ENV PYTHONPATH "${PYTHONPATH}:/app"
 RUN apt-get update && apt-get install -y \
     default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
