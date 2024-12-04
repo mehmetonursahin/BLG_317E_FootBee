@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from routes.games import bp as games_bp
 from routes.index import bp as index_bp
-
+from routes.clubs import bp as clubs_bp
+from routes.players import bp as players_bp
 def load_configs(app):
     import os
     from dotenv import load_dotenv
@@ -23,7 +24,9 @@ def create_app():
     # this way we can focus on default CRUD api urls 
     # and set all of that blueprint prefix at once
     app.register_blueprint(index_bp)
-    app.register_blueprint(games_bp, url_prefix="/games")
+    app.register_blueprint(games_bp, url_prefix="/games")  # Games routes
+    app.register_blueprint(players_bp, url_prefix="/players")
+    app.register_blueprint(clubs_bp, url_prefix="/clubs")
     return app
 
 
