@@ -1,39 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function GamesPage() {
-  // State for games and filter
   const [games, setGames] = useState([]);
   const [filter, setFilter] = useState("");
 
-  // Fetch games data (replace with actual API call)
   useEffect(() => {
-    // Example game data
     const fetchGames = async () => {
-      const data = [
-        { id: 1, home: "Team A", away: "Team B", score: "2-1", date: "2024-12-01" },
-        { id: 2, home: "Team C", away: "Team D", score: "0-0", date: "2024-12-02" },
-        { id: 3, home: "Team E", away: "Team F", score: "3-2", date: "2024-12-03" },
-        // Add more data as needed
-      ];
-      setGames(data);
+      const response = await fetch("http://127.0.0.1:8080/games");
+      const data = await response.json();
+      setGames(data.games);
     };
+
     fetchGames();
   }, []);
 
-  // Filtered games based on input
   const filteredGames = games.filter(
-    game =>
-      game.home.toLowerCase().includes(filter.toLowerCase()) ||
-      game.away.toLowerCase().includes(filter.toLowerCase()) ||
-      game.date.includes(filter)
-  );
+   (game) =>
+     (game.home || "").toLowerCase().includes(filter.toLowerCase()) || // Varsayılan değer
+     (game.away || "").toLowerCase().includes(filter.toLowerCase()) ||
+     (game.date || "").includes(filter)
+ );
+ 
 
   return (
     <section>
       <div className="container">
         <h2>Games</h2>
-        
-        {/* Filter Input */}
+
         <input
           type="text"
           placeholder="Filter games..."
@@ -49,7 +42,6 @@ function GamesPage() {
           }}
         />
 
-        {/* Games Table */}
         <table>
           <thead>
             <tr>

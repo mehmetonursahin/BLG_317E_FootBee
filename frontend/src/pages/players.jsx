@@ -1,39 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function PlayersPage() {
-  // State for players and filter
   const [players, setPlayers] = useState([]);
   const [filter, setFilter] = useState("");
 
-  // Fetch players data (replace with actual API call)
+  // Fetch players data
   useEffect(() => {
-    // Example player data
     const fetchPlayers = async () => {
-      const data = [
-        { id: 1, name: "Lionel Messi", position: "Forward", age: 36, club: "Inter Miami", nationality: "Argentina" },
-        { id: 2, name: "Cristiano Ronaldo", position: "Forward", age: 38, club: "Al-Nassr", nationality: "Portugal" },
-        { id: 3, name: "Kylian Mbappé", position: "Forward", age: 24, club: "Paris Saint-Germain", nationality: "France" },
-        // Add more data as needed
-      ];
-      setPlayers(data);
+      try {
+        const response = await fetch("http://127.0.0.1:8080/players");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setPlayers(data.players || []); // Hata durumunda boş array sağlar
+      } catch (error) {
+        console.error("Failed to fetch players:", error);
+        setPlayers([]); // Hata durumunda boş array ata
+      }
     };
+
     fetchPlayers();
   }, []);
 
   // Filtered players based on input
   const filteredPlayers = players.filter(
-    player =>
-      player.name.toLowerCase().includes(filter.toLowerCase()) ||
-      player.position.toLowerCase().includes(filter.toLowerCase()) ||
-      player.club.toLowerCase().includes(filter.toLowerCase()) ||
-      player.nationality.toLowerCase().includes(filter.toLowerCase())
+    (player) =>
+      (player.name || "").toLowerCase().includes(filter.toLowerCase()) || // Varsayılan değer
+      (player.position || "").toLowerCase().includes(filter.toLowerCase()) ||
+      (player.club || "").toLowerCase().includes(filter.toLowerCase()) ||
+      (player.nationality || "").toLowerCase().includes(filter.toLowerCase())
   );
+
+  const calculateAge = (dateOfBirth) => {
+   if (!dateOfBirth) return "N/A"; // Eğer doğum tarihi yoksa
+   const birthDate = new Date(dateOfBirth);
+   const today = new Date();
+   let age = today.getFullYear() - birthDate.getFullYear();
+   const monthDifference = today.getMonth() - birthDate.getMonth();
+   if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+     age--; // Eğer doğum gününü henüz kutlamadıysa, yaşı bir azalt
+   }
+   return age;
+ };
 
   return (
     <section>
       <div className="container">
         <h2>Players</h2>
-        
+
         {/* Filter Input */}
         <input
           type="text"
@@ -66,11 +81,11 @@ function PlayersPage() {
             {filteredPlayers.map((player) => (
               <tr key={player.id}>
                 <td>{player.id}</td>
-                <td>{player.name}</td>
-                <td>{player.position}</td>
-                <td>{player.age}</td>
-                <td>{player.club}</td>
-                <td>{player.nationality}</td>
+                <td>{player.first_name || null} {player.last_name || null}</td>
+                <td>{player.position || "N/A"}</td>
+                <td>{calculateAge(player.date_of_birth)}</td>
+                <td>{player.club || "N/A"}</td>
+                <td>{player.nationality || "N/A"}</td>
               </tr>
             ))}
           </tbody>

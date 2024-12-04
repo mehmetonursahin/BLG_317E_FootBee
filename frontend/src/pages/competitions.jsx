@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function CompetitionsPage() {
-  // State for competitions and filter
   const [competitions, setCompetitions] = useState([]);
   const [filter, setFilter] = useState("");
 
-  // Fetch competitions data (replace with actual API call)
   useEffect(() => {
-    // Example competition data
     const fetchCompetitions = async () => {
-      const data = [
-        { id: 1, name: "Premier League", country: "England", type: "League" },
-        { id: 2, name: "La Liga", country: "Spain", type: "League" },
-        { id: 3, name: "Champions League", country: "Europe", type: "Cup" },
-        // Add more data as needed
-      ];
-      setCompetitions(data);
+      const response = await fetch("http://127.0.0.1:8080/competitions");
+      const data = await response.json();
+      setCompetitions(data.competitions);
     };
+
     fetchCompetitions();
   }, []);
 
-  // Filtered competitions based on input
   const filteredCompetitions = competitions.filter(
-    competition =>
+    (competition) =>
       competition.name.toLowerCase().includes(filter.toLowerCase()) ||
       competition.country.toLowerCase().includes(filter.toLowerCase()) ||
       competition.type.toLowerCase().includes(filter.toLowerCase())
@@ -32,8 +25,7 @@ function CompetitionsPage() {
     <section>
       <div className="container">
         <h2>Competitions</h2>
-        
-        {/* Filter Input */}
+
         <input
           type="text"
           placeholder="Filter competitions..."
@@ -49,7 +41,6 @@ function CompetitionsPage() {
           }}
         />
 
-        {/* Competitions Table */}
         <table>
           <thead>
             <tr>
