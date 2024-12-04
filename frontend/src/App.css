@@ -1,0 +1,77 @@
+/* Navbar Styles */
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 0.5rem 0;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  margin: 0 1rem;
+}
+
+.navbar-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-menu a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  background-color: #f4f4f9;
+}
+
+header, section {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 1rem;
+  text-align: left;
+}
+
+table th, table td {
+  padding: 1rem;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #333;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f4f4f9;
+}
+
+footer {
+  text-align: center;
+  background-color: #333;
+  color: white;
+  padding: 1rem 0;
+}

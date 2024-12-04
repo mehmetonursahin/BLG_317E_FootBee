@@ -3,6 +3,9 @@ from routes.games import bp as games_bp
 from routes.index import bp as index_bp
 from routes.clubs import bp as clubs_bp
 from routes.players import bp as players_bp
+
+from flask_cors import CORS
+
 def load_configs(app):
     import os
     from dotenv import load_dotenv
@@ -16,7 +19,7 @@ def load_configs(app):
 
 def create_app():
     app = Flask(__name__)
-
+    CORS(app)
     # load configs from environment
     load_configs(app)
     
