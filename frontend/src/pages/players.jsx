@@ -33,7 +33,7 @@ function PlayersPage() {
   );
 
   const calculateAge = (dateOfBirth) => {
-   if (!dateOfBirth) return "N/A"; // Eğer doğum tarihi yoksa
+   if (!dateOfBirth) return "Null"; // Eğer doğum tarihi yoksa
    const birthDate = new Date(dateOfBirth);
    const today = new Date();
    let age = today.getFullYear() - birthDate.getFullYear();
