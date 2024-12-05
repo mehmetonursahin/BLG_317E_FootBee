@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ../
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.backend
     env_file:
       - ../backend/.env
     ports:
@@ -20,6 +20,19 @@ services:
       - database
     expose:
       - "8080"
+
+  frontend:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./../frontend:/app
+      - /app/node_modules # Exclude node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm start
 
   database:
     image: mysql:8.0
