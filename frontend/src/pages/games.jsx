@@ -54,12 +54,12 @@ function GamesPage() {
           </thead>
           <tbody>
             {filteredGames.map((game) => (
-              <tr key={game.id}>
-                <td>{game.id}</td>
-                <td>{game.home}</td>
-                <td>{game.away}</td>
-                <td>{game.score}</td>
-                <td>{game.date}</td>
+              <tr key={game.game_id}>
+                <td>{game.game_id}</td>
+                <td>{game.home_club_name}</td>
+                <td>{game.away_club_name}</td>
+                <td>{game.aggregate}</td>
+                <td>{new Date(game.date).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
