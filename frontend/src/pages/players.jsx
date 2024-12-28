@@ -1,6 +1,9 @@
+// PlayersPage.jsx
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function PlayersPage() {
+  const navigate = useNavigate();
   const [players, setPlayers] = useState([]);
   const [filter, setFilter] = useState("");
 
@@ -26,28 +29,38 @@ function PlayersPage() {
   // Filtered players based on input
   const filteredPlayers = players.filter(
     (player) =>
-      (player.name || "").toLowerCase().includes(filter.toLowerCase()) || // Varsayılan değer
+      (player.name || "").toLowerCase().includes(filter.toLowerCase()) ||
       (player.position || "").toLowerCase().includes(filter.toLowerCase()) ||
       (player.club || "").toLowerCase().includes(filter.toLowerCase()) ||
       (player.nationality || "").toLowerCase().includes(filter.toLowerCase())
   );
 
   const calculateAge = (dateOfBirth) => {
-   if (!dateOfBirth) return "Null"; // Eğer doğum tarihi yoksa
-   const birthDate = new Date(dateOfBirth);
-   const today = new Date();
-   let age = today.getFullYear() - birthDate.getFullYear();
-   const monthDifference = today.getMonth() - birthDate.getMonth();
-   if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-     age--; // Eğer doğum gününü henüz kutlamadıysa, yaşı bir azalt
-   }
-   return age;
- };
+    if (!dateOfBirth) return "Null";
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
 
   return (
     <section>
       <div className="container">
         <h2>Players</h2>
+
+        <button
+          onClick={() => navigate("/add")}
+          style={{ marginBottom: "1rem", padding: "0.5rem 1rem" }}
+        >
+          Add Player
+        </button>
 
         {/* Filter Input */}
         <input
@@ -62,6 +75,7 @@ function PlayersPage() {
             maxWidth: "300px",
             borderRadius: "4px",
             border: "1px solid #ccc",
+            display: "block",
           }}
         />
 
@@ -69,7 +83,7 @@ function PlayersPage() {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>player_id</th>
               <th>Name</th>
               <th>Position</th>
               <th>Age</th>
@@ -79,13 +93,19 @@ function PlayersPage() {
           </thead>
           <tbody>
             {filteredPlayers.map((player) => (
-              <tr key={player.id}>
-                <td>{player.id}</td>
-                <td>{player.first_name || null} {player.last_name || null}</td>
+              <tr
+                key={player.player_id}
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/player/${player.player_id}`)}
+              >
+                <td>{player.player_id}</td>
+                <td>
+                  {player.first_name || null} {player.last_name || null}
+                </td>
                 <td>{player.position || "N/A"}</td>
                 <td>{calculateAge(player.date_of_birth)}</td>
-                <td>{player.club || "N/A"}</td>
-                <td>{player.nationality || "N/A"}</td>
+                <td>{player.name || "N/A"}</td>
+                <td>{player.country_of_citizenship || "N/A"}</td>
               </tr>
             ))}
           </tbody>

@@ -47,7 +47,7 @@ def get_players():
     
     order_by_clause = get_order_by_clause("player_id")
     
-    query = f"SELECT * FROM players ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    query = f"SELECT * FROM players inner join clubs on players.current_club_id = clubs.club_id ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
     cursor.execute(query)
     players = cursor.fetchall()
     
