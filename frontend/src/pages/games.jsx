@@ -156,7 +156,9 @@ const GamesPage = () => {
     params.set("sort", sortParam);
     navigate(`?${params.toString()}`);
   };
-  
+  const handleRowClick = (game_id) => {
+    navigate(`/game/${game_id}`);
+  };
 
   const getSortIndicator = (column) => {
     return sortStates[column] ? (sortStates[column] === "ASC" ? "↑" : "↓") : "";
@@ -209,7 +211,7 @@ const GamesPage = () => {
             </thead>
             <tbody>
               {games.map((game) => (
-                <tr key={game.game_id}>
+                <tr key={game.game_id} onClick={() => handleRowClick(game.game_id)}>
                   <td>{game.home_club_name}</td>
                   <td>{game.aggregate}</td>
                   <td>{game.away_club_name}</td>
