@@ -104,7 +104,7 @@ const GameEvents = ({ events, game }) => {
   return (
     <div className="relative-div">
       <div >
-        <button className="create-button" onClick={() => handleOpenAddModal()}>
+        <button className="create-button" style={styles.submitButton} onClick={() => handleOpenAddModal()}>
           Create Game Event
         </button>
       </div>
@@ -183,5 +183,51 @@ const GameEvents = ({ events, game }) => {
     </div>
   );
 };
-
+const styles = {
+  container: {
+    padding: "20px",
+    maxWidth: "800px",
+    margin: "0 auto",
+  },
+  heading: {
+    textAlign: "center", // Centers the heading
+    marginBottom: "20px",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    maxHeight: "800px",
+    gap: "1rem",
+  },
+  input: {
+    padding: "0.8rem",
+    borderRadius: "4px",
+    border: "1px solid #ddd",
+    fontSize: "1rem",
+    backgroundColor: "#f9f9f9",
+  },
+  submitButton: {
+    padding: "0.8rem",
+    backgroundColor: "#4CAF50",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    fontSize: "1rem",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    marginTop: "20px",
+  },
+  cancelButton: {
+    padding: "0.8rem",
+    backgroundColor: "#f22",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    fontSize: "1rem",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    marginTop: "20px",
+  },
+};
 export default GameEvents;

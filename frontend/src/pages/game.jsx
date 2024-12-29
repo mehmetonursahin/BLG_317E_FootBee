@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/clubDetails.css";
 import "../styles/GamePage.css";
 import GameEvents from "../components/GameEvents";
 const GamePage = () => {
@@ -34,12 +35,12 @@ const GamePage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  const handleDeleteGame = async () => {
+  const handleDeleteGame = async (event) => {
+    event.preventDefault();
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this game?"
     );
     if (!confirmDelete) return;
-
     try {
       const response = await fetch(`http://127.0.0.1:8080/games/${gameId}`, {
         method: "DELETE",
@@ -79,7 +80,7 @@ const GamePage = () => {
     }
   };
   return (
-    <div className="game-page">
+    <div className="container">
       <h1>Game Detail</h1>
       <div className="tab-buttons">
         <button
@@ -163,301 +164,230 @@ const GamePage = () => {
       {activeTab === "edit-delete" && (
         <div className="edit-delete-tab">
           <form onSubmit={handleEdit} style={styles.form}>
-            <label>
-              Aggregate:
-              <input
-                type="text"
-                value={game.aggregate}
-                onChange={(e) =>
-                  setGame({ ...game, aggregate: e.target.value })
-                }
-                placeholder={game.aggregate || "Aggregate"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.aggregate}
+              onChange={(e) => setGame({ ...game, aggregate: e.target.value })}
+              placeholder={game.aggregate || "Aggregate"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Attendance:
-              <input
-                type="text"
-                value={game.attendance}
-                onChange={(e) =>
-                  setGame({ ...game, attendance: e.target.value })
-                }
-                placeholder={game.attendance || "Attendance"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.attendance}
+              onChange={(e) => setGame({ ...game, attendance: e.target.value })}
+              placeholder={game.attendance || "Attendance"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Away club Goals:
-              <input
-                type="text"
-                value={game.away_club_goals}
-                onChange={(e) =>
-                  setGame({ ...game, away_club_goals: e.target.value })
-                }
-                placeholder={game.away_club_goals || "Away club Goals"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.away_club_goals}
+              onChange={(e) =>
+                setGame({ ...game, away_club_goals: e.target.value })
+              }
+              placeholder={game.away_club_goals || "Away club Goals"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Away club ID:
-              <input
-                type="text"
-                value={game.away_club_id}
-                onChange={(e) =>
-                  setGame({ ...game, away_club_id: e.target.value })
-                }
-                placeholder={game.away_club_id || "Away club ID"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.away_club_id}
+              onChange={(e) =>
+                setGame({ ...game, away_club_id: e.target.value })
+              }
+              placeholder={game.away_club_id || "Away club ID"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Away club Manager Name:
-              <input
-                type="text"
-                value={game.away_club_manager_name}
-                onChange={(e) =>
-                  setGame({ ...game, away_club_manager_name: e.target.value })
-                }
-                placeholder={
-                  game.away_club_manager_name || "Away club Manager Name"
-                }
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.away_club_manager_name}
+              onChange={(e) =>
+                setGame({ ...game, away_club_manager_name: e.target.value })
+              }
+              placeholder={
+                game.away_club_manager_name || "Away club Manager Name"
+              }
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Away club Name:
-              <input
-                type="text"
-                value={game.away_club_name}
-                onChange={(e) =>
-                  setGame({ ...game, away_club_name: e.target.value })
-                }
-                placeholder={game.away_club_name || "Away club Name"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.away_club_name}
+              onChange={(e) =>
+                setGame({ ...game, away_club_name: e.target.value })
+              }
+              placeholder={game.away_club_name || "Away club Name"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Away club Position:
-              <input
-                type="text"
-                value={game.away_club_position}
-                onChange={(e) =>
-                  setGame({ ...game, away_club_position: e.target.value })
-                }
-                placeholder={game.away_club_position || "Away club Position"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.away_club_position}
+              onChange={(e) =>
+                setGame({ ...game, away_club_position: e.target.value })
+              }
+              placeholder={game.away_club_position || "Away club Position"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Competition ID:
-              <input
-                type="text"
-                value={game.competition_id}
-                onChange={(e) =>
-                  setGame({ ...game, competition_id: e.target.value })
-                }
-                placeholder={game.competition_id || "Competition ID"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.competition_id}
+              onChange={(e) =>
+                setGame({ ...game, competition_id: e.target.value })
+              }
+              placeholder={game.competition_id || "Competition ID"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Competition Type:
-              <input
-                type="text"
-                value={game.competition_type}
-                onChange={(e) =>
-                  setGame({ ...game, competition_type: e.target.value })
-                }
-                placeholder={game.competition_type || "Competition Type"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.competition_type}
+              onChange={(e) =>
+                setGame({ ...game, competition_type: e.target.value })
+              }
+              placeholder={game.competition_type || "Competition Type"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Date:
-              <input
-                type="text"
-                value={game.date}
-                onChange={(e) => setGame({ ...game, date: e.target.value })}
-                placeholder={game.date || "Date"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.date}
+              onChange={(e) => setGame({ ...game, date: e.target.value })}
+              placeholder={game.date || "Date"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Game ID:
-              <input
-                type="text"
-                value={game.game_id}
-                onChange={(e) => setGame({ ...game, game_id: e.target.value })}
-                placeholder={game.game_id || "Game ID"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.game_id}
+              onChange={(e) => setGame({ ...game, game_id: e.target.value })}
+              placeholder={game.game_id || "Game ID"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Home club Goals:
-              <input
-                type="text"
-                value={game.home_club_goals}
-                onChange={(e) =>
-                  setGame({ ...game, home_club_goals: e.target.value })
-                }
-                placeholder={game.home_club_goals || "Home club Goals"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.home_club_goals}
+              onChange={(e) =>
+                setGame({ ...game, home_club_goals: e.target.value })
+              }
+              placeholder={game.home_club_goals || "Home club Goals"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Home club ID:
-              <input
-                type="text"
-                value={game.home_club_id}
-                onChange={(e) =>
-                  setGame({ ...game, home_club_id: e.target.value })
-                }
-                placeholder={game.home_club_id || "Home club ID"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.home_club_id}
+              onChange={(e) =>
+                setGame({ ...game, home_club_id: e.target.value })
+              }
+              placeholder={game.home_club_id || "Home club ID"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Home club Manager Name:
-              <input
-                type="text"
-                value={game.home_club_manager_name}
-                onChange={(e) =>
-                  setGame({ ...game, home_club_manager_name: e.target.value })
-                }
-                placeholder={
-                  game.home_club_manager_name || "Home club Manager Name"
-                }
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.home_club_manager_name}
+              onChange={(e) =>
+                setGame({ ...game, home_club_manager_name: e.target.value })
+              }
+              placeholder={
+                game.home_club_manager_name || "Home club Manager Name"
+              }
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Home club Name:
-              <input
-                type="text"
-                value={game.home_club_name}
-                onChange={(e) =>
-                  setGame({ ...game, home_club_name: e.target.value })
-                }
-                placeholder={game.home_club_name || "Home club Name"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.home_club_name}
+              onChange={(e) =>
+                setGame({ ...game, home_club_name: e.target.value })
+              }
+              placeholder={game.home_club_name || "Home club Name"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Home club Position:
-              <input
-                type="text"
-                value={game.home_club_position}
-                onChange={(e) =>
-                  setGame({ ...game, home_club_position: e.target.value })
-                }
-                placeholder={game.home_club_position || "Home club Position"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.home_club_position}
+              onChange={(e) =>
+                setGame({ ...game, home_club_position: e.target.value })
+              }
+              placeholder={game.home_club_position || "Home club Position"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Referee:
-              <input
-                type="text"
-                value={game.referee}
-                onChange={(e) => setGame({ ...game, referee: e.target.value })}
-                placeholder={game.referee || "Referee"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.referee}
+              onChange={(e) => setGame({ ...game, referee: e.target.value })}
+              placeholder={game.referee || "Referee"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Round:
-              <input
-                type="text"
-                value={game.round}
-                onChange={(e) => setGame({ ...game, round: e.target.value })}
-                placeholder={game.round || "Round"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.round}
+              onChange={(e) => setGame({ ...game, round: e.target.value })}
+              placeholder={game.round || "Round"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Season:
-              <input
-                type="text"
-                value={game.season}
-                onChange={(e) => setGame({ ...game, season: e.target.value })}
-                placeholder={game.season || "Season"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.season}
+              onChange={(e) => setGame({ ...game, season: e.target.value })}
+              placeholder={game.season || "Season"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              Stadium:
-              <input
-                type="text"
-                value={game.stadium}
-                onChange={(e) => setGame({ ...game, stadium: e.target.value })}
-                placeholder={game.stadium || "Stadium"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.stadium}
+              onChange={(e) => setGame({ ...game, stadium: e.target.value })}
+              placeholder={game.stadium || "Stadium"}
+              style={styles.input}
+              required
+            />
 
-            <label>
-              URL:
-              <input
-                type="text"
-                value={game.url}
-                onChange={(e) => setGame({ ...game, url: e.target.value })}
-                placeholder={game.url || "URL"}
-                style={styles.input}
-                required
-              />
-            </label>
+            <input
+              type="text"
+              value={game.url}
+              onChange={(e) => setGame({ ...game, url: e.target.value })}
+              placeholder={game.url || "URL"}
+              style={styles.input}
+              required
+            />
 
             <button type="submit" style={styles.submitButton}>
               Update Game
             </button>
+            <button onClick={handleDeleteGame} style={styles.cancelButton}>
+              Delete Game
+            </button>
           </form>
-          <button
-            onClick={handleDeleteGame}
-            className="delete-button"
-            style={styles.deleteButton}
-          >
-            Delete Game
-          </button>
         </div>
       )}
     </div>
@@ -476,6 +406,8 @@ const styles = {
   form: {
     display: "flex",
     flexDirection: "column",
+    flexWrap: "wrap",
+    maxHeight: "800px",
     gap: "1rem",
   },
   input: {
@@ -488,6 +420,17 @@ const styles = {
   submitButton: {
     padding: "0.8rem",
     backgroundColor: "#4CAF50",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    fontSize: "1rem",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    marginTop: "20px",
+  },
+  cancelButton: {
+    padding: "0.8rem",
+    backgroundColor: "#f22",
     color: "#fff",
     border: "none",
     borderRadius: "4px",
