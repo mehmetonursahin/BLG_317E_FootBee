@@ -65,10 +65,13 @@ table th {
   color: white;
 }
 
-table tr:nth-child(even) {
-  background-color: #f4f4f9;
+table tr:nth-child(2n) {
+  background-color:#a0a0a12d;
 }
 
+table tbody tr:hover{
+background-color: #57575794;
+}
 footer {
   text-align: center;
   background-color: #333;
