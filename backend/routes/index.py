@@ -43,8 +43,11 @@ def get_games():
             filter_key = "_".join(filter_key_words[:-1]) if filter_key_words[-1] in ["start", "end"] else filter_key
             # concatenate the filter with AND 
             filter_query += f" AND {filter_key} {filter_operator} %s"
+            
+            if filter_operator == "LIKE":
+                filter_val = f"%{filter_val}%"
             params.append(filter_val)
-    
+    current_app.logger.info(filter_query)
     query = f"SELECT COUNT(*) as total from games {filter_query}"
     cursor.execute(query, params)
     total_count = cursor.fetchone()['total']
