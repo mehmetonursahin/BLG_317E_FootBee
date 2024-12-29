@@ -3,28 +3,65 @@ from db.connection import get_db
 from routes.helper import *
 bp = Blueprint('clubs', __name__)
 
-# GET
 @bp.route('/<int:club_id>', methods=['GET'])
 def get_club(club_id):
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM clubs WHERE club_id = %s", (club_id,))
-    club = cursor.fetchone()
+    cursor.execute("""
+        SELECT 
+            clubs.*, 
+            players.*, 
+            clubs.url AS club_url, 
+            players.url AS player_url 
+        FROM clubs 
+        INNER JOIN players 
+            ON clubs.club_id = players.current_club_id 
+        WHERE clubs.club_id = %s
+    """, (club_id,))
+    
+    club = cursor.fetchall()  # Use fetchall() to get all players for the club
     
     if club:
-        return jsonify(club)
+        # Separate the club details and players list
+        club_details = club[0]  # The first entry will be the club details
+        players = club  # All entries will be players since they share the same club_id
+        
+        # Add players to the response
+        return jsonify({'club': club_details, 'players': players})  
     else:
         return jsonify({'error': 'Club not found'}), 400
+    
     cursor.close()
     db.close()
+
+
 
 # POST
 @bp.route('/', methods=['POST'])
 def create_club():
     data = request.json
+    if not data:
+        return jsonify({'error': 'Invalid data provided'}), 400
     db = get_db()
     cursor = db.cursor()
     try:
+        cursor.execute("SELECT MAX(club_id) FROM clubs")
+        last_club_id = cursor.fetchone()[0] or 0
+        new_club_id = last_club_id + 1
+        
+        # Insert the new club with the new club_id
+        data['club_id'] = new_club_id
+        
+        print(data)
+        
+        int_fields = ['squad_size', 'average_age', 'foreigners_number', 'foreigners_percent', 'national_team_players', 'stadium_seats']
+        
+        for field in int_fields:
+            if data[field] == "":
+                data[field] = None
+        
+        print(data)
+        
         cursor.execute("""
             INSERT INTO clubs (
                 club_id, club_code, name, domestic_competition, total_market_value,
@@ -39,7 +76,7 @@ def create_club():
             )
         """, data)
         db.commit()
-        return jsonify({'message': 'Club created successfully', 'id': cursor.lastrowid}), 201
+        return jsonify({'message': 'Club created successfully', 'id': new_club_id}), 201
     except Exception as e:
         db.rollback()
         return jsonify({'error': str(e)}), 400

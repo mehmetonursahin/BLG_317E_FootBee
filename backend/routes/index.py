@@ -88,7 +88,7 @@ def get_players():
     
     order_by_clause = get_order_by_clause("player_id")
     
-    query = f"SELECT * FROM players ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    query = f"SELECT * FROM players inner join clubs on players.current_club_id = clubs.club_id ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
     cursor.execute(query)
     players = cursor.fetchall()
     
@@ -108,16 +108,18 @@ def get_clubs():
     db = get_db()
     cursor = db.cursor(dictionary=True)
     
-    # Toplam kayıt sayısını al
-    query = "SELECT COUNT(*) as total FROM clubs"
-    cursor.execute(query)
-    total_count = cursor.fetchone()['total']
-    page,per_page,offset,total_pages = pagination(total_count, size=20)
-    # Sıralama kriterini belirle
-    order_by_clause = get_order_by_clause("club_id")
+
+    # # Toplam kayıt sayısını al
+    # query = "SELECT COUNT(*) as total FROM clubs WHERE name <> 'null'"
+    # page, per_page, offset, total_count, total_pages = pagination(cursor, query, size=20)
     
-    # Kulüpleri sıralı ve sayfalama ile getir
-    query = f"SELECT * FROM clubs ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    # # Sıralama kriterini belirle
+    # order_by_clause = get_order_by_clause("club_id")
+
+    
+    # # Kulüpleri sıralı ve sayfalama ile getir
+    # query = f"SELECT * FROM clubs WHERE name <> 'null' ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    query = "SELECT * FROM clubs WHERE name <> 'null' ORDER BY club_id"
     cursor.execute(query)
     clubs = cursor.fetchall()
     
@@ -127,8 +129,38 @@ def get_clubs():
 
     return jsonify({
         'clubs': clubs,
-        'page': page,
-        'per_page': per_page,
-        'total_pages': total_pages,
-        'total_count': total_count
+        # 'page': page,
+        # 'per_page': per_page,
+        # 'total_pages': total_pages,
+        # 'total_count': total_count
+    })
+    
+@bp.route('/competitions', methods=['GET'], strict_slashes=False)
+def get_competitions():
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    
+    # # Toplam kayıt sayısını al
+    # query = "SELECT COUNT(*) as total FROM clubs WHERE name <> 'null'"
+    # page, per_page, offset, total_count, total_pages = pagination(cursor, query, size=20)
+    
+    # # Sıralama kriterini belirle
+    # order_by_clause = get_order_by_clause("club_id")
+    
+    # # Kulüpleri sıralı ve sayfalama ile getir
+    # query = f"SELECT * FROM clubs WHERE name <> 'null' ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    query = "SELECT * FROM competitions ORDER BY competition_id"
+    cursor.execute(query)
+    competitions = cursor.fetchall()
+    
+    # Bağlantıları kapat
+    cursor.close()
+    db.close()
+
+    return jsonify({
+        'competitions': competitions,
+        # 'page': page,
+        # 'per_page': per_page,
+        # 'total_pages': total_pages,
+        # 'total_count': total_count
     })
