@@ -3,6 +3,7 @@ from routes.games import bp as games_bp
 from routes.index import bp as index_bp
 from routes.clubs import bp as clubs_bp
 from routes.players import bp as players_bp
+from routes.competitions import bp as competitions_bp
 
 from flask_cors import CORS
 
@@ -30,6 +31,7 @@ def create_app():
     app.register_blueprint(games_bp, url_prefix="/games")  # Games routes
     app.register_blueprint(players_bp, url_prefix="/players")
     app.register_blueprint(clubs_bp, url_prefix="/clubs")
+    app.register_blueprint(competitions_bp, url_prefix="/competitions")
     return app
 
 

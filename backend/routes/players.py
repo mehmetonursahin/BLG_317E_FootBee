@@ -8,7 +8,17 @@ bp = Blueprint('players', __name__)
 def get_player(player_id):
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM players WHERE player_id = %s", (player_id,))
+    cursor.execute("""
+    SELECT *
+    FROM players
+    INNER JOIN player_valuations 
+        ON players.player_id = player_valuations.player_id
+    INNER JOIN clubs
+        ON players.current_club_id = clubs.club_id
+    WHERE players.player_id = %s
+""", (player_id,))
+
+
     player = cursor.fetchone()
     
     if player:
