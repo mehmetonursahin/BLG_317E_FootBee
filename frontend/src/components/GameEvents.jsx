@@ -169,6 +169,8 @@ const GameEvents = ({ events, game }) => {
         event={selectedEvent}
         onSave={handleSave}
         mode="edit"
+        game={game}
+
       />
       <GameEventModal
         isOpen={isAddModalOpen}
