@@ -29,6 +29,8 @@ def get_games():
         "date_end" : "<=",
         "attendance_start" : ">=",
         "attendance_end" : "<=",
+        "home_club_name": "LIKE",
+        "away_club_name" : "LIKE", 
         "home_club_manager_name": "LIKE",
         "away_club_manager_name": "LIKE",
         "stadium" : "LIKE",
