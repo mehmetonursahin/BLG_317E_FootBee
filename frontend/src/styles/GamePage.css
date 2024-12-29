@@ -1,0 +1,82 @@
+.game-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .game-details {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .game-details h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .game-details span {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .game-details p {
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  .game-events {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .game-events h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .event {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    border-radius: 4px;
+    background: #f7f7f7;
+    border-left: 5px solid #ccc;
+  }
+  
+  .event.goal {
+    border-color: #28a745;
+  }
+  
+  .event.substitutions {
+    border-color: #007bff;
+  }
+  
+  .event-minute {
+    flex: 0 0 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .event-details {
+    flex: 1;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .event-details strong {
+    color: #333;
+  }
+  
