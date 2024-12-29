@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 
 const AddGame = () => {
-  const [formData, setFormData] = useState({
-    aggregate: "",
-    attendance: "",
-    away_club_goals: "",
-    away_club_id: "",
-    away_club_manager_name: "",
-    away_club_name: "",
-    away_club_position: "",
-    competition_id: "",
-    competition_type: "",
-    date: "",
-    game_id: "",
-    home_club_goals: "",
-    home_club_id: "",
-    home_club_manager_name: "",
-    home_club_name: "",
-    home_club_position: "",
-    referee: "",
-    round: "",
-    season: "",
-    stadium: "",
-    url: "",
-  });
+  const defaultGamePlaceholder = {
+    aggregate: "1:1",
+    attendance: "123",
+    away_club_goals: "2",
+    away_club_id: "3",
+    away_club_manager_name: "Manager1",
+    away_club_name: "1.FC Köln",
+    away_club_position: "2",
+    competition_id: "BE1",
+    competition_type: "first_tier",
+    date: "20241229",
+    game_id: "1234567",
+    home_club_goals: "1",
+    home_club_id: "4",
+    home_club_manager_name: "Manager2",
+    home_club_name: "AC Milan",
+    home_club_position: "3",
+    referee: "Maksim Layushkin",
+    round: "6. Matchday",
+    season: "2024",
+    stadium: "Metallurg",
+    url: "https://www.transfermarkt.co.uk/krylya-sovetov-samara_kuban-krasnodar-2018-/index/spielbericht/2222599",
+  };
+  const [formData, setFormData] = useState(defaultGamePlaceholder);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,32 +41,8 @@ const AddGame = () => {
         },
         body: JSON.stringify(formData),
       });
-
       if (response.ok) {
         alert("Game added successfully!");
-        setFormData({
-          aggregate: "",
-          attendance: "",
-          away_club_goals: "",
-          away_club_id: "",
-          away_club_manager_name: "",
-          away_club_name: "",
-          away_club_position: "",
-          competition_id: "",
-          competition_type: "",
-          date: "",
-          game_id: "",
-          home_club_goals: "",
-          home_club_id: "",
-          home_club_manager_name: "",
-          home_club_name: "",
-          home_club_position: "",
-          referee: "",
-          round: "",
-          season: "",
-          stadium: "",
-          url: "",
-        });
       } else {
         alert("Failed to add game.");
       }
@@ -82,7 +59,7 @@ const AddGame = () => {
         {Object.keys(formData).map((key) => (
           <div key={key}>
             <label>
-              {key.replace(/_/g, " ")}: 
+              {key.replace(/_/g, " ")}:
               <input
                 type="text"
                 name={key}
