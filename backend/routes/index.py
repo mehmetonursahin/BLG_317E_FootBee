@@ -91,3 +91,33 @@ def get_clubs():
         # 'total_pages': total_pages,
         # 'total_count': total_count
     })
+    
+@bp.route('/competitions', methods=['GET'], strict_slashes=False)
+def get_competitions():
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    
+    # # Toplam kayıt sayısını al
+    # query = "SELECT COUNT(*) as total FROM clubs WHERE name <> 'null'"
+    # page, per_page, offset, total_count, total_pages = pagination(cursor, query, size=20)
+    
+    # # Sıralama kriterini belirle
+    # order_by_clause = get_order_by_clause("club_id")
+    
+    # # Kulüpleri sıralı ve sayfalama ile getir
+    # query = f"SELECT * FROM clubs WHERE name <> 'null' ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    query = "SELECT * FROM competitions ORDER BY competition_id"
+    cursor.execute(query)
+    competitions = cursor.fetchall()
+    
+    # Bağlantıları kapat
+    cursor.close()
+    db.close()
+
+    return jsonify({
+        'competitions': competitions,
+        # 'page': page,
+        # 'per_page': per_page,
+        # 'total_pages': total_pages,
+        # 'total_count': total_count
+    })
