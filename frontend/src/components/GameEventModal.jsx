@@ -16,8 +16,8 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
   useEffect(() => {
     if (event) {
       setFormData({
-        game_id : event.game_id || "",
-        game_event_id : event.game_event_id || "",
+        game_id : game.game_id || "",
+        game_event_id : game.game_event_id || "",
         club_id : event.club_id || "",
         player_id: event.player_id || "",
         player_in_id: event.player_in_id || null,
@@ -25,6 +25,14 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
         type: event.type || "",
         minute: event.minute || "",
       });
+    } else if (game) {
+      setFormData({
+        ...formData,
+        game_id : game.game_id || "",
+        game_event_id : game.game_event_id || "",
+        club_id : game.home_club_id || "",
+        type: "Goals",
+      })
     }
   }, [event])
   if (!isOpen ) return null;
@@ -32,6 +40,7 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+    if (formData.player_in_id == "") setFormData((prevData) => ({ ...prevData, ["player_in_id"]: null }));
   };
 
   const handleSubmit = (e) => {
@@ -68,7 +77,7 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
           <label>
             Player ID:
             <input
-              type="text"
+              type="number"
               name="player_id"
               value={formData.player_id}
               onChange={handleChange}
@@ -78,7 +87,7 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
             <label>
               Player In ID:
               <input
-                type="text"
+                type="number"
                 name="player_in_id"
                 value={formData.player_in_id}
                 onChange={handleChange}
@@ -104,7 +113,7 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
               onChange={handleChange}
             />
           </label>
-          <button type="submit">Save Changes</button>
+          <button type="submit">{mode == "edit" ? "Save Changes" : "Create Game"}</button>
           <button type="button" onClick={onClose}>
             Cancel
           </button>
