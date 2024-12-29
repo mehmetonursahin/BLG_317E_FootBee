@@ -6,6 +6,7 @@ import HomePage from './pages/Homepage';
 import ClubsPage from './pages/clubs';
 import PlayersPage from './pages/players';
 import GamesPage from './pages/games';
+import GamePage from './pages/game';
 import CompetitionsPage from './pages/competitions';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/clubs" element={<ClubsPage />} />
             <Route path="/players" element={<PlayersPage />} />
             <Route path="/games" element={<GamesPage />} />
+            <Route path="/game/:gameId" element={<GamePage />} />
             <Route path="/competitions" element={<CompetitionsPage />} />
           </Routes>
         </div>
