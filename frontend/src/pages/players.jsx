@@ -6,25 +6,30 @@ function PlayersPage() {
   const navigate = useNavigate();
   const [players, setPlayers] = useState([]);
   const [filter, setFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
 
   // Fetch players data
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8080/players");
+        const response = await fetch(`http://127.0.0.1:8080/players?page=${currentPage}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setPlayers(data.players || []); // Hata durumunda boş array sağlar
+        setPlayers(data.players || []);
+        setTotalPages(data.total_pages || 0);
       } catch (error) {
         console.error("Failed to fetch players:", error);
-        setPlayers([]); // Hata durumunda boş array ata
+        setPlayers([]);
       }
     };
 
     fetchPlayers();
-  }, []);
+  }, [currentPage]);
+
 
   // Filtered players based on input
   const filteredPlayers = players.filter(
@@ -110,6 +115,26 @@ function PlayersPage() {
             ))}
           </tbody>
         </table>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            style={{ marginRight: "1rem" }}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            style={{ marginLeft: "1rem" }}
+          >
+            Next
+          </button>
+        </div>
+
       </div>
     </section>
   );
