@@ -1,17 +1,17 @@
 from flask import  request
 from math import ceil
 
-def pagination(cursor, sql, size=10):
+def pagination(total_count, size=10):
     """
         Total count must be under column "total"
     """
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', size))
     offset = (page - 1) * per_page
-    cursor.execute(sql)
-    total_count = cursor.fetchone()['total']
+    # cursor.execute(sql)
+    # total_count = cursor.fetchone()['total']
     total_pages = ceil(total_count / per_page)
-    return page, per_page, offset, total_count, total_pages
+    return page, per_page, offset, total_pages
 
 def get_order_by_clause(default_column):
     sort_columns = request.args.getlist('sort_by')
