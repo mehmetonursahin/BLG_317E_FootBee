@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/GamePage.css';
 
 const GamePage = () => {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
-  // const [appearances, setAppearances] = useState([]);
   const [gameEvents, setGameEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!gameId) return;
+
     const fetchGameData = async () => {
       setLoading(true);
       setError(null);
@@ -33,39 +34,43 @@ const GamePage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
+    <div className="game-page">
       {game && (
-        <div>
-          <h1>{game.home_club_name} vs {game.away_club_name}</h1>
-          <p><strong>Date:</strong> {new Date(game.date).toISOString().split("T")[0]}</p>
+        <div className="game-details">
+          <h1>
+            {game.home_club_name} <span>vs</span> {game.away_club_name}
+          </h1>
+          <p><strong>Date:</strong> {new Date(game.date).toLocaleDateString()}</p>
           <p><strong>Score:</strong> {game.home_club_goals} - {game.away_club_goals}</p>
           <p><strong>Venue:</strong> {game.stadium}</p>
           <p><strong>Referee:</strong> {game.referee}</p>
         </div>
       )}
-      <div>
+
+      <div className="game-events">
         <h2>Game Events</h2>
         {gameEvents.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Minute</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Player</th>
-              </tr>
-            </thead>
-            <tbody>
-              {gameEvents.map((event) => (
-                <tr key={event.game_event_id}>
-                  <td>{event.minute}</td>
-                  <td>{event.type}</td>
-                  <td>{event.description || '-'}</td>
-                  <td>{event.player_id}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="events-list">
+            {gameEvents.map((event) => (
+              <div key={event.game_event_id} className={`event ${event.type.toLowerCase()}`}>
+                <div className="event-minute">
+                  <strong>{event.minute}'</strong>
+                </div>
+                <div className="event-details">
+                  {event.type === 'Goals' && (
+                    <p>
+                      <strong>Goal!</strong> {event.description || 'No details'} - Player : {event.player_name}
+                    </p>
+                  )}
+                  {event.type === 'Substitutions' && (
+                    <p>
+                      <strong>Substitution:</strong> Player Out: {event.player_name}, Player In: {event.player_in_name}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <p>No game events data available.</p>
         )}
