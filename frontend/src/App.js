@@ -6,7 +6,10 @@ import HomePage from './pages/Homepage';
 import ClubsPage from './pages/clubs';
 import PlayersPage from './pages/players';
 import GamesPage from './pages/games';
+import GamePage from './pages/game';
 import CompetitionsPage from './pages/competitions';
+import AddGame from './pages/AddGame';
+import EditGame from './pages/EditGame';
 import PlayerDetail from './pages/playerDetail';
 import AddPlayerPage from './pages/addPlayer'
 import ClubDetailsPage from './pages/clubDetails';
@@ -14,6 +17,7 @@ import AddClubPage from './pages/addClub';
 import EditClubPage from './pages/editClub';
 import CompetitionDetailsPage from './pages/competitionDetails';
 import AddCompetitionPage from './pages/addCompetition';
+
 
 function App() {
   return (
@@ -31,6 +35,9 @@ function App() {
             <Route path="/add" element={<AddPlayerPage />} />
             <Route path="/player/:playerId" element={<PlayerDetail />} />
             <Route path="/games" element={<GamesPage />} />
+            <Route path="/game/add" element={<AddGame />} />
+            <Route path="/game/edit/:gameId" element={<EditGame />} />
+            <Route path="/game/:gameId" element={<GamePage />} />
             <Route path="/competitions" element={<CompetitionsPage />} />
             <Route path="/competitions/:competitionId" element={<CompetitionDetailsPage />} />
             <Route path="/competitions/add" element={<AddCompetitionPage />} />
