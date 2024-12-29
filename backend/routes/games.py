@@ -8,16 +8,21 @@ bp = Blueprint('games', __name__)
 def get_game(game_id):
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM games WHERE game_id = %s", (game_id,))
-    game = cursor.fetchone()
-    
-    if game:
-        return jsonify(game)
-    else:
-        return jsonify({'error': 'Game not found'}), 400
-    cursor.close()
-    db.close()
-    
+    try:
+        cursor.execute("SELECT * FROM games WHERE game_id = %s", (game_id,))
+        game = cursor.fetchone()
+        cursor.execute("SELECT * FROM game_events WHERE game_id = %s ", (game_id,))
+        game_events = cursor.fetchall()
+        if game:
+            return jsonify({
+                'game' : game,
+                'game_events' : game_events
+            })
+        else:
+            return jsonify({'error': 'Game not found'}), 400
+    finally:
+        cursor.close()
+        db.close()
         
 
 # POST
