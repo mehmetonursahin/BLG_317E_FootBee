@@ -9,6 +9,9 @@ import GamesPage from './pages/games';
 import CompetitionsPage from './pages/competitions';
 import PlayerDetail from './pages/playerDetail';
 import AddPlayerPage from './pages/addPlayer'
+import ClubDetailsPage from './pages/clubDetails';
+import AddClubPage from './pages/addClub';
+import EditClubPage from './pages/editClub';
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/clubs" element={<ClubsPage />} />
+            <Route path="/clubs/:clubId" element={<ClubDetailsPage />} />
+            <Route path="/clubs/add" element={<AddClubPage />} />
+            <Route path="/clubs/edit/:clubId" element={<EditClubPage />} />
             <Route path="/players" element={<PlayersPage />} />
             <Route path="/add" element={<AddPlayerPage />} />
             <Route path="/player/:playerId" element={<PlayerDetail />} />
