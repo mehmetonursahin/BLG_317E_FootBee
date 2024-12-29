@@ -7,9 +7,11 @@ const GamesPage = () => {
   const metadata = {
     competition_id: "exact",
     competition_type: "exact",
+    stadium: "exact",
+    referee: "exact",
     round: "exact",
-    home_club_id: "exact",
-    away_club_id: "exact",
+    away_club_name: "exact",
+    home_club_name: "exact",
     home_club_goals: "exact",
     away_club_goals: "exact",
     season: "range",
@@ -17,8 +19,6 @@ const GamesPage = () => {
     attendance: "range",
     home_club_manager_name: "exact",
     away_club_manager_name: "exact",
-    stadium: "exact",
-    referee: "exact",
   };
   // Parse current filters from URL
   const getFiltersFromUrl = () => {
@@ -206,7 +206,6 @@ const GamesPage = () => {
                 <th onClick={() => handleSort("stadium")}>
                   Stadium {getSortIndicator("stadium")}
                 </th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -218,9 +217,6 @@ const GamesPage = () => {
                   <td>{new Date(game.date).toISOString().split("T")[0]}</td>
                   <td>{game.referee}</td>
                   <td>{game.stadium}</td>
-                  <td>
-                    <a href={`/game/${game.game_id}`}>Go to game </a>
-                  </td>
                 </tr>
               ))}
             </tbody>
