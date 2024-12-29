@@ -12,16 +12,44 @@ def get_games():
     db = get_db()
     cursor = db.cursor(dictionary=True)
     
-    # current_app.logger.info(request.args)
+        # filtering 
+    filter_query = "WHERE 1 = 1"
+    filters = {
+        "competition_id" : "==",
+        "competition_type" : "==",
+        "round": "==",
+        "home_club_id": "==",
+        "away_club_id" : "==", 
+        "home_club_goals" : "==",
+        "away_club_goals" : "==",
+        "season_start": ">=",
+        "season_end" : "<=",
+        "date_start" : ">=",
+        "date_end" : "<=",
+        "attendance_start" : ">=",
+        "attendance_end" : "<=",
+        "home_club_manager_name": "LIKE",
+        "away_club_manager_name": "LIKE",
+        "stadium" : "LIKE",
+        "referee" : "LIKE",
+    }
+    for filter_key, filter_operator in filters:
+        filter_val = request.args.get(filter_key, None)
+        if filter_val:
+            #  this part will remove the start and end keywords from filter_key
+            filter_key_words = filter_key.split('_')
+            filter_key = "_".join(filter_key_words[:-1]) if filter_key_words[-1] in ["start", "end"] else filter_key
+            # concatenate the filter with AND 
+            filter_query += f" AND {filter_key} {filter_operator} {filter_val}"
     
-    query = "SELECT COUNT(*) as total from games"
+    query = f"SELECT COUNT(*) as total from games {filter_query}"
     page,per_page,offset,total_count,total_pages = pagination(cursor, query, size=20)
-    
     order_by_clause = get_order_by_clause("game_id")
     # current_app.logger.info(order_by_clause)
     
+
     #get requested games ordered and with pagination    
-    query = f"SELECT * FROM games ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
+    query = f"SELECT * FROM games {filter_query} ORDER BY {order_by_clause} LIMIT {per_page} OFFSET {offset}"
     cursor.execute(query)
     games = cursor.fetchall()
     #close connections    
@@ -32,6 +60,7 @@ def get_games():
         'games': games,
         'page': page,
         'per_page': per_page,
+        'offset' : offset,
         'total_pages': total_pages,
         'total_count': total_count
     })
