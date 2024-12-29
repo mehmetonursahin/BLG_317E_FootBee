@@ -163,6 +163,9 @@ const GamesPage = () => {
   const getSortIndicator = (column) => {
     return sortStates[column] ? (sortStates[column] === "ASC" ? "↑" : "↓") : "";
   };
+  const handleAddGameClick = () => {
+    navigate("/games/add");
+  };
   return (
     <section>
       <div className="games-page">
@@ -183,8 +186,27 @@ const GamesPage = () => {
           <button onClick={handleSubmit}>Submit</button>
         </div>
 
-        <div className="games-list">
+        <div className="container">
           <h3>Games</h3>
+        <div>
+        <button
+          onClick={handleAddGameClick}
+          style={{
+            marginBottom: "1rem",
+            padding: "0.75rem 1.5rem",
+            backgroundColor: "#888888",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "1rem",
+            width: "100%",
+            maxWidth: "200px",
+          }}
+        >
+          Add Game
+        </button>
+        </div>
           <table>
             <thead>
               <tr>
@@ -210,13 +232,13 @@ const GamesPage = () => {
             </thead>
             <tbody>
               {games.map((game) => (
-                <tr key={game.game_id} onClick={() => handleRowClick(game.game_id)}>
-                  <td>{game.home_club_name}</td>
-                  <td>{game.aggregate}</td>
-                  <td>{game.away_club_name}</td>
-                  <td>{new Date(game.date).toISOString().split("T")[0]}</td>
-                  <td>{game.referee}</td>
-                  <td>{game.stadium}</td>
+                <tr key={game.game_id} onClick={() => handleRowClick(game.game_id)} >
+                  <td style={styles.td}>{game.home_club_name}</td>
+                  <td style={styles.td}>{game.aggregate}</td>
+                  <td style={styles.td}>{game.away_club_name}</td>
+                  <td style={styles.td}>{new Date(game.date).toISOString().split("T")[0]}</td>
+                  <td style={styles.td}>{game.referee}</td>
+                  <td style={styles.td}>{game.stadium}</td>
                 </tr>
               ))}
             </tbody>
@@ -243,56 +265,11 @@ const GamesPage = () => {
     </section>
   );
 };
-
+const styles = {
+  td : {
+    width : "150px",
+    height: "60px"
+  }
+}
 export default GamesPage;
 
-// function GamesPage() {
-//   const [games, setGames] = useState([]);
-//   const [filter, setFilter] = useState("");
-
-//   // useEffect(() => {
-//   //   const fetchGames = async () => {
-//   //     const response = await fetch("http://127.0.0.1:8080/games");
-//   //     const data = await response.json();
-//   //     setGames(data.games);
-//   //   };
-
-//   //   fetchGames();
-//   // }, []);
-
-//   return (
-//     <section>
-//       <div className="container">
-//         <h2>Games</h2>
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>Home Team</th>
-//               <th>Score</th>
-//               <th>Away Team</th>
-//               <th>Date</th>
-//               <th>Referee</th>
-//               <th>Stadium</th>
-//               <th>Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {filteredGames.map((game) => (
-//               <tr key={game.game_id}>
-//                 <td>{game.home_club_name}</td>
-//                 <td>{game.aggregate}</td>
-//                 <td>{game.away_club_name}</td>
-//                 <td>{new Date(game.date).toLocaleDateString()}</td>
-//                 <td>{game.referee}</td>
-//                 <td>{game.stadium}</td>
-//                 <td>
-//                   <a href={`/game/${game.game_id}`}>Go to game </a>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </section>
-//   );
-// }
