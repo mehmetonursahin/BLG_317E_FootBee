@@ -32,7 +32,7 @@ const EditGame = () => {
       const response = await fetch(`http://127.0.0.1:8080/games?game_id=${gameId}`);
       const data = await response.json();
       const game = data.games[0];
-      game["date"] = new Date(game["date"]).toISOString().split('T')[0];
+      game.date = new Date(game.date).toISOString().split('T')[0];
       setFormData(data.games[0]);
     };
 

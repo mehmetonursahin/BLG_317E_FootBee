@@ -37,7 +37,7 @@ const GamePage = () => {
       {game && (
         <div>
           <h1>{game.home_club_name} vs {game.away_club_name}</h1>
-          <p><strong>Date:</strong> {new Date(game.date).toLocaleDateString()}</p>
+          <p><strong>Date:</strong> {new Date(game.date).toISOString().split("T")[0]}</p>
           <p><strong>Score:</strong> {game.home_club_goals} - {game.away_club_goals}</p>
           <p><strong>Venue:</strong> {game.stadium}</p>
           <p><strong>Referee:</strong> {game.referee}</p>
