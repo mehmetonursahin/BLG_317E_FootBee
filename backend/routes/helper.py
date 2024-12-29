@@ -17,7 +17,7 @@ def get_order_by_clause(default_column):
     sort_columns = request.args.getlist('sort_by')
     sort_directions = request.args.getlist('sort_direction')
     # Default sorting if no parameters are in url
-    if not sort_columns or not sort_directions:
+    if not sort_columns:
         sort_columns = [default_column]
         sort_directions = ['ASC']
     if len(sort_columns) != len(sort_directions):
