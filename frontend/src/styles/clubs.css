@@ -111,3 +111,20 @@ table tr:hover {
 .pagination-controls span {
   margin: 0 10px;
 }
+
+/* Add sorting styles */
+.clubs-list th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px; /* Space for sort indicator */
+}
+
+.clubs-list th:hover {
+  background-color: #f0f0f0;
+}
+
+/* Optional: Add transition for sort indicators */
+.clubs-list th::after {
+  transition: opacity 0.2s ease;
+}

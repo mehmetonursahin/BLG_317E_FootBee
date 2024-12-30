@@ -10,6 +10,8 @@ function ClubsPage() {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [sortField, setSortField] = useState('');
+  const [sortDirection, setSortDirection] = useState('asc');
 
   // Function to fetch clubs data
   const fetchClubs = async () => {
@@ -24,18 +26,44 @@ function ClubsPage() {
   }, []);
 
   const handleFilterChange = (e) => {
-    const filterText = e.target.value;
+    const filterText = e.target.value.toLowerCase();
     setFilter(filterText);
-    const filtered = clubs.filter(
-      (club) =>
-        club.name.toLowerCase().includes(filterText.toLowerCase()) ||
-        club.stadium_name.toLowerCase().includes(filterText.toLowerCase())
-    );
+    
+    const filtered = clubs.filter((club) => {
+      return (
+        club.name?.toLowerCase().includes(filterText) ||
+        club.stadium_name?.toLowerCase().includes(filterText)
+      );
+    });
+    
     setFilteredClubs(filtered);
-    setPage(1);
+    setPage(1); // Reset to first page when filtering
   };
 
-  const paginatedClubs = filteredClubs.slice((page - 1) * 20, page * 20);
+  const paginatedClubs = filteredClubs
+    .sort((a, b) => {
+      if (!sortField) return 0;
+      
+      let aValue = a[sortField];
+      let bValue = b[sortField];
+      
+      // Handle null values
+      if (aValue === null) return sortDirection === 'asc' ? 1 : -1;
+      if (bValue === null) return sortDirection === 'asc' ? -1 : 1;
+      
+      // Convert to strings for string comparison
+      if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+      
+      if (sortDirection === 'asc') {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    })
+    .slice((page - 1) * 20, page * 20);
 
   const calculateTotalPages = () => Math.ceil(filteredClubs.length / 20);
 
@@ -78,6 +106,22 @@ function ClubsPage() {
     navigate("/clubs/add"); // Navigate to the Add Club page
   };
 
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const getSortIndicator = (field) => {
+    if (sortField === field) {
+      return sortDirection === 'asc' ? ' ↑' : ' ↓';
+    }
+    return '';
+  };
+
   return (
     <section>
       <div className="container">
@@ -115,9 +159,15 @@ function ClubsPage() {
         <table style={{ width: "100%", tableLayout: "fixed" }}>
           <thead>
             <tr>
-              <th style={{ width: "33%" }}>Name</th>
-              <th style={{ width: "33%" }}>League</th>
-              <th style={{ width: "33%" }}>Stadium</th>
+              <th onClick={() => handleSort('name')} style={{ cursor: 'pointer' }}>
+                Club Name{getSortIndicator('name')}
+              </th>
+              <th onClick={() => handleSort('domestic_competition')} style={{ cursor: 'pointer' }}>
+                League{getSortIndicator('domestic_competition')}
+              </th>
+              <th onClick={() => handleSort('stadium_name')} style={{ cursor: 'pointer' }}>
+                Stadium{getSortIndicator('stadium_name')}
+              </th>
             </tr>
           </thead>
           <tbody>

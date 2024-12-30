@@ -156,21 +156,68 @@ function ClubDetailsPage() {
 
       {/* Overview Tab */}
       {activeTab === "overview" && (
-        <div className="overview-tab">
-          <div className="club-info">
-            <h3>{club.name}</h3>
-            <p><strong>League:</strong> {getLeagueName(club.domestic_competition) || "N/A"}</p>
-            <p><strong>Total Market Value:</strong> {club.total_market_value || "N/A"}</p>
-            <p><strong>Squad Size:</strong> {club.squad_size || "N/A"}</p>
-            <p><strong>Average Age:</strong> {club.average_age || "N/A"}</p>
-            <p><strong>Foreigners Number:</strong> {club.foreigners_number || "N/A"}</p>
-            <p><strong>Foreigners Percentage:</strong> {club.foreigners_percent || "N/A"}</p>
-            <p><strong>National Team Players:</strong> {club.national_team_players || "N/A"}</p>
-            <p><strong>Stadium Name:</strong> {club.stadium_name || "N/A"}</p>
-            <p><strong>Stadium Seats:</strong> {club.stadium_seats || "N/A"}</p>
-            <p><strong>Net Transfer Record:</strong> {club.net_transfer_record || "N/A"}</p>
-            <p><strong>Coach:</strong> {club.coach_name || "N/A"}</p>
-            <p><strong>Website:</strong> <a href={club.club_url} target="_blank" rel="noopener noreferrer">{club.club_url}</a></p>
+        <div className="overview-tab" >
+          <div className="club-details-content">
+            <table className="details-table">
+              <tbody>
+                <tr>
+                  <th>Club Name</th>
+                  <td>{club.name}</td>
+                </tr>
+                <tr>
+                  <th>League</th>
+                  <td>{getLeagueName(club.domestic_competition) || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Total Market Value</th>
+                  <td>{club.total_market_value || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Squad Size</th>
+                  <td>{club.squad_size || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Average Age</th>
+                  <td>{club.average_age || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Foreigners Number</th>
+                  <td>{club.foreigners_number || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Foreigners Percentage</th>
+                  <td>{club.foreigners_percent || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>National Team Players</th>
+                  <td>{club.national_team_players || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Stadium Name</th>
+                  <td>{club.stadium_name || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Stadium Seats</th>
+                  <td>{club.stadium_seats || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Net Transfer Record</th>
+                  <td>{club.net_transfer_record || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Coach</th>
+                  <td>{club.coach_name || "N/A"}</td>
+                </tr>
+                <tr>
+                  <th>Website</th>
+                  <td>
+                    <a href={club.club_url} target="_blank" rel="noopener noreferrer">
+                      {club.club_url}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           {/* Players Section */}
