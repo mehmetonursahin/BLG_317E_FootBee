@@ -7,26 +7,53 @@ bp = Blueprint('players', __name__)
 @bp.route('/<int:player_id>', methods=['GET'])
 def get_player(player_id):
     db = get_db()
-    cursor = db.cursor(dictionary=True)
-    cursor.execute("""
-    SELECT *
-    FROM players
-    INNER JOIN player_valuations 
-        ON players.player_id = player_valuations.player_id
-    INNER JOIN clubs
-        ON players.current_club_id = clubs.club_id
-    WHERE players.player_id = %s
-""", (player_id,))
+    try:
+        # Oyuncu bilgilerini al
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("""
+        SELECT *
+        FROM players
+        INNER JOIN player_valuations 
+            ON players.player_id = player_valuations.player_id
+        INNER JOIN clubs
+            ON players.current_club_id = clubs.club_id
+        WHERE players.player_id = %s
+        """, (player_id,))
+        player = cursor.fetchone()
 
+        if not player:
+            cursor.close()
+            return jsonify({'error': 'Player not found'}), 400
 
-    player = cursor.fetchone()
-    
-    if player:
+        # İlk sorgunun sonuçlarını tamamen işledik
+        while cursor.nextset():  # Bir sonraki setin okunmasını sağla
+            pass
+        cursor.close()
+
+        # Appearances bilgilerini al
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("""
+        SELECT *
+        FROM appearances
+        WHERE player_id = %s
+        """, (player_id,))
+        appearances = cursor.fetchall()
+
+        # Tüm sonuçlar okundu
+        while cursor.nextset():  # Bir sonraki setin okunmasını sağla
+            pass
+        cursor.close()
+
+        # Appearances bilgilerini ekle
+        player['appearances'] = appearances
+
         return jsonify(player)
-    else:
-        return jsonify({'error': 'Player not found'}), 400
-    cursor.close()
-    db.close()
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    finally:
+        if cursor:
+            cursor.close()
+        db.close()
 
 # POST
 @bp.route('/', methods=['POST'])
