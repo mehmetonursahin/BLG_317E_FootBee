@@ -16,8 +16,8 @@ import AddClubPage from './pages/addClub';
 import EditClubPage from './pages/editClub';
 import CompetitionDetailsPage from './pages/competitionDetails';
 import AddCompetitionPage from './pages/addCompetition';
-
-
+import AddAppearance from './pages/addAppearances'
+import EditAppearance from './pages/EditAppearances'
 function App() {
   return (
     <Router>
@@ -39,6 +39,11 @@ function App() {
             <Route path="/competitions" element={<CompetitionsPage />} />
             <Route path="/competitions/:competitionId" element={<CompetitionDetailsPage />} />
             <Route path="/competitions/add" element={<AddCompetitionPage />} />
+            <Route path="/players/:playerId/add-appearance" element={<AddAppearance />} />
+            <Route
+              path="/players/:playerId/edit-appearance/:appearanceId"
+              element={<EditAppearance />}
+            />
           </Routes>
         </div>
       </div>

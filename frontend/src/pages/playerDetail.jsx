@@ -124,11 +124,6 @@ function PlayerDetail() {
 
 
   // Yeni bir appearance formu açmak için state
-  const [newAppearance, setNewAppearance] = useState(null);
-
-  const handleEditAppearance = (appearance) => {
-    setNewAppearance(appearance);
-  };
 
   const handleDeleteAppearance = async (appearanceId) => {
     if (window.confirm("Are you sure you want to delete this appearance?")) {
@@ -153,48 +148,14 @@ function PlayerDetail() {
   };
 
   const handleAddAppearance = () => {
-    setNewAppearance({
-      appearance_id: "",
-      game_id: "",
-      competition_id: "",
-      date: "",
-      goals: 0,
-      assists: 0,
-      minutes_played: 0,
-      yellow_cards: 0,
-      red_cards: 0,
-    });
+    navigate(`/players/${playerId}/add-appearance`);
+  };
+  
+  // Mevcut bir görünümü düzenleme
+  const handleEditAppearance = (appearanceId) => {
+    navigate(`/players/${playerId}/edit-appearance/${appearanceId}`);
   };
 
-  // Yeni veya düzenlenmiş appearance'ı kaydet
-  const saveAppearance = async (appearance) => {
-    const method = appearance.appearance_id ? "PUT" : "POST";
-    const url = appearance.appearance_id
-      ? `http://localhost:8080/appearances/${appearance.appearance_id}`
-      : `http://localhost:8080/appearances`;
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(appearance),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save appearance");
-      }
-
-      alert("Appearance saved successfully!");
-      setNewAppearance(null);
-
-      // GET isteği ile güncellenmiş listeyi alabilirsiniz veya state'i manuel güncelleyebilirsiniz.
-    } catch (error) {
-      console.error(error);
-      alert("Error saving appearance");
-    }
-  };
 
 
   // Henüz veri çekilmediyse
