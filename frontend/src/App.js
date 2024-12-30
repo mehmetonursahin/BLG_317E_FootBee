@@ -9,7 +9,6 @@ import GamesPage from './pages/games';
 import GamePage from './pages/game';
 import CompetitionsPage from './pages/competitions';
 import AddGame from './pages/AddGame';
-import EditGame from './pages/EditGame';
 import PlayerDetail from './pages/playerDetail';
 import AddPlayerPage from './pages/addPlayer'
 import ClubDetailsPage from './pages/clubDetails';

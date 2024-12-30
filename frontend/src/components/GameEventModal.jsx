@@ -6,7 +6,7 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
     game_event_id : "",
     club_id : "",
     player_id: "",
-    player_in_id: "",
+    player_in_id: null,
     description: "",
     type: "",
     minute: "",
@@ -34,18 +34,18 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
         type: "Goals",
       })
     }
-  }, [event])
+  }, [event, game])
   if (!isOpen ) return null;
   
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-    if (formData.player_in_id == "") setFormData((prevData) => ({ ...prevData, ["player_in_id"]: null }));
+    if (formData.player_in_id === "") setFormData((prevData) => ({ ...prevData, ["player_in_id"]: null }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(mode=="edit") onSave(event.game_event_id, formData);
+    if(mode==="edit") onSave(event.game_event_id, formData);
     else onSave(formData);
   };
 
@@ -54,10 +54,10 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
     
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>{mode == "edit" ? "Edit" : "Create"} Game Event</h2>
+        <h2>{mode === "edit" ? "Edit" : "Create"} Game Event</h2>
         <form onSubmit={handleSubmit}>
           
-          { mode == "create" && (
+          { mode === "create" && (
             <label>
             Club:
             <select name="club_id" value={formData.club_id} onChange={handleChange}>
@@ -113,7 +113,7 @@ const GameEventModal = ({ isOpen, onClose, event, onSave, mode , game=null }) =>
               onChange={handleChange}
             />
           </label>
-          <button type="submit">{mode == "edit" ? "Save Changes" : "Create Game"}</button>
+          <button type="submit">{mode === "edit" ? "Save Changes" : "Create Game"}</button>
           <button type="button" onClick={onClose}>
             Cancel
           </button>

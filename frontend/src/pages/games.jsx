@@ -168,8 +168,8 @@ const GamesPage = () => {
   };
   return (
     <section>
-      <div className="games-page">
-        <div className="filter-panel">
+
+        <div className="filter-panel" style={styles.filterPanel}>
           <h3>Filters</h3>
           {Object.entries(metadata).map(([columnName, filterType]) => (
             <div key={columnName} className="filter-field">
@@ -187,22 +187,11 @@ const GamesPage = () => {
         </div>
 
         <div className="container">
-          <h3>Games</h3>
+          <h2>Games</h2>
         <div>
         <button
           onClick={handleAddGameClick}
-          style={{
-            marginBottom: "1rem",
-            padding: "0.75rem 1.5rem",
-            backgroundColor: "#888888",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            width: "100%",
-            maxWidth: "200px",
-          }}
+          className="add-button"
         >
           Add Game
         </button>
@@ -261,7 +250,6 @@ const GamesPage = () => {
             </button>
           </div>
         </div>
-      </div>
     </section>
   );
 };
@@ -269,6 +257,11 @@ const styles = {
   td : {
     width : "150px",
     height: "60px"
+  },
+  filterPanel: {
+    position : "absolute",
+    left: "2rem",
+    top: "4rem",
   }
 }
 export default GamesPage;
