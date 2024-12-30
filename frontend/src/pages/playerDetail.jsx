@@ -37,7 +37,7 @@ function PlayerDetail() {
   // 1) Sayfa yüklendiğinde backend'den veriyi çek
   useEffect(() => {
     const fetchPlayer = async () => {
-      
+
       try {
         const response = await fetch(`http://localhost:8080/players/${playerId}`);
         if (!response.ok) {
@@ -122,6 +122,81 @@ function PlayerDetail() {
     }
   };
 
+
+  // Yeni bir appearance formu açmak için state
+  const [newAppearance, setNewAppearance] = useState(null);
+
+  const handleEditAppearance = (appearance) => {
+    setNewAppearance(appearance);
+  };
+
+  const handleDeleteAppearance = async (appearanceId) => {
+    if (window.confirm("Are you sure you want to delete this appearance?")) {
+      try {
+        const response = await fetch(`http://localhost:8080/appearances/${appearanceId}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to delete appearance");
+        }
+        alert("Appearance deleted successfully!");
+        // Appearances listesini güncelle
+        setPlayerData((prevData) => ({
+          ...prevData,
+          appearances: prevData.appearances.filter((a) => a.appearance_id !== appearanceId),
+        }));
+      } catch (error) {
+        console.error(error);
+        alert("Error deleting appearance");
+      }
+    }
+  };
+
+  const handleAddAppearance = () => {
+    setNewAppearance({
+      appearance_id: "",
+      game_id: "",
+      competition_id: "",
+      date: "",
+      goals: 0,
+      assists: 0,
+      minutes_played: 0,
+      yellow_cards: 0,
+      red_cards: 0,
+    });
+  };
+
+  // Yeni veya düzenlenmiş appearance'ı kaydet
+  const saveAppearance = async (appearance) => {
+    const method = appearance.appearance_id ? "PUT" : "POST";
+    const url = appearance.appearance_id
+      ? `http://localhost:8080/appearances/${appearance.appearance_id}`
+      : `http://localhost:8080/appearances`;
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(appearance),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save appearance");
+      }
+
+      alert("Appearance saved successfully!");
+      setNewAppearance(null);
+
+      // GET isteği ile güncellenmiş listeyi alabilirsiniz veya state'i manuel güncelleyebilirsiniz.
+    } catch (error) {
+      console.error(error);
+      alert("Error saving appearance");
+    }
+  };
+
+
   // Henüz veri çekilmediyse
   if (!playerData) {
     return <div className="player-detail-container">Loading...</div>;
@@ -183,6 +258,41 @@ function PlayerDetail() {
             <p><strong>Stadium Name:</strong> {playerData.stadium_name}</p>
             <p><strong>Coach Name:</strong> {playerData.coach_name}</p>
           </div>
+          <div className="appearances-section">
+  <h3>Appearances</h3>
+  {playerData.appearances && playerData.appearances.length > 0 ? (
+    playerData.appearances.map((appearance) => (
+      <div key={appearance.appearance_id} className="appearance-card">
+        <p><strong>Date:</strong> {new Date(appearance.date).toLocaleDateString()}</p>
+        <p><strong>Competition:</strong> {appearance.competition_id}</p>
+        <p><strong>Goals:</strong> {appearance.goals}</p>
+        <p><strong>Assists:</strong> {appearance.assists}</p>
+        <p><strong>red:</strong> {appearance.red_cards}</p>
+        <p><strong>yellow:</strong> {appearance.yellow_cards}</p>
+        <div>
+          <button
+            className="edit-button"
+            onClick={() => handleEditAppearance(appearance)}
+          >
+            Edit
+          </button>
+          <button
+            className="delete-button"
+            onClick={() => handleDeleteAppearance(appearance.appearance_id)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p>No appearances available.</p>
+  )}
+  <button className="add-appearance-button" onClick={handleAddAppearance}>
+    Add Appearance
+  </button>
+</div>
+
         </div>
       )}
 
@@ -279,12 +389,13 @@ function PlayerDetail() {
 
             <button type="submit">Update</button>
             <button className="delete-button" onClick={handleDelete}>
-            Delete
-          </button>
+              Delete
+            </button>
           </form>
-        
+
 
         </div>
+
       )}
     </div>
   );

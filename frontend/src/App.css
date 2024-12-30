@@ -269,3 +269,73 @@ footer {
   margin-top: 1rem;
 }
 
+/* Appearances Section */
+.appearances-section {
+  color: black;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appearance-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.appearance-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.appearance-card button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.appearance-card button.edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.appearance-card button.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.appearance-card button.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.appearance-card button.delete-button:hover {
+  background-color: #a71d2a;
+}
+
+.add-appearance-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-appearance-button:hover {
+  background-color: #218838;
+}
