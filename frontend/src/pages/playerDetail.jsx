@@ -267,8 +267,8 @@ function PlayerDetail() {
         <p><strong>Competition:</strong> {appearance.competition_id}</p>
         <p><strong>Goals:</strong> {appearance.goals}</p>
         <p><strong>Assists:</strong> {appearance.assists}</p>
-        <p><strong>red:</strong> {appearance.red_cards}</p>
-        <p><strong>yellow:</strong> {appearance.yellow_cards}</p>
+        <p><strong>Red Card:</strong> {appearance.red_cards}</p>
+        <p><strong>Yellow Card:</strong> {appearance.yellow_cards}</p>
         <div>
           <button
             className="edit-button"

@@ -1,6 +1,7 @@
 // AddPlayerPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "../styles/addPlayer.css";
 
 function AddPlayerPage() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ function AddPlayerPage() {
   return (
     <div style={{ padding: '1rem' }}>
       <h2>Add Player</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-section">
         <div>
           <label>Player ID: </label>
           <input
