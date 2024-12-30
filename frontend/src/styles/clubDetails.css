@@ -27,11 +27,13 @@
 
 .club-info {
   margin-bottom: 20px;
+  color: black;
 }
 
 .players-section {
   margin-top: 30px;
   display: block;
+  color: black;
 }
 
 .players-position-group {

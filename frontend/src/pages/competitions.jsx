@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/shared.css';
 
 function CompetitionsPage() {
   const [competitions, setCompetitions] = useState([]);
@@ -100,18 +101,7 @@ function CompetitionsPage() {
         <div>
         <button
           onClick={handleAddCompetitionClick}
-          style={{
-            marginBottom: "1rem",
-            padding: "0.75rem 1.5rem",
-            backgroundColor: "#888888",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            width: "100%",
-            maxWidth: "200px",
-          }}
+          className="add-button"
         >
           Add Competition
         </button>
@@ -142,7 +132,7 @@ function CompetitionsPage() {
         </table>
 
         {/* Pagination Controls */}
-        <div>
+        <div className="pagination-controls">
           <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
             Previous
           </button>

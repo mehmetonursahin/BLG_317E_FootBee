@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/clubs.css';
+import '../styles/shared.css';
 
 function ClubsPage() {
   // State for clubs data, filter, and pagination
@@ -79,9 +81,12 @@ function ClubsPage() {
   return (
     <section>
       <div className="container">
+        <div className="clubs-header">
         <h2>Clubs</h2>
+        </div>
 
         {/* Filter Input */}
+        <div className="filter-field">
         <input
           type="text"
           placeholder="Filter clubs..."
@@ -96,29 +101,17 @@ function ClubsPage() {
             border: "1px solid #ccc",
           }}
         />
+        </div>
 
         {/* Add Club Button */}
         <div>
-        <button
-          onClick={handleAddClubClick}
-          style={{
-            marginBottom: "1rem",
-            padding: "0.75rem 1.5rem",
-            backgroundColor: "#888888",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            width: "100%",
-            maxWidth: "200px",
-          }}
-        >
+        <button className="add-button" onClick={handleAddClubClick}>
           Add Club
         </button>
         </div>
 
         {/* Clubs Table */}
+        <div>
         <table style={{ width: "100%", tableLayout: "fixed" }}>
           <thead>
             <tr>
@@ -141,9 +134,10 @@ function ClubsPage() {
             ))}
           </tbody>
         </table>
+        </div>
 
         {/* Pagination Controls */}
-        <div>
+        <div className="pagination-controls">
           <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
             Previous
           </button>

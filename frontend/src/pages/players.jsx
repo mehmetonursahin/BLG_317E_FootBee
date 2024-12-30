@@ -1,6 +1,7 @@
 // PlayersPage.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/shared.css';
 
 function PlayersPage() {
   const navigate = useNavigate();
@@ -60,13 +61,6 @@ function PlayersPage() {
       <div className="container">
         <h2>Players</h2>
 
-        <button
-          onClick={() => navigate("/add")}
-          style={{ marginBottom: "1rem", padding: "0.5rem 1rem" }}
-        >
-          Add Player
-        </button>
-
         {/* Filter Input */}
         <input
           type="text"
@@ -84,6 +78,10 @@ function PlayersPage() {
           }}
         />
 
+
+        <button className="add-button" onClick={() => navigate("/add")}>
+          Add Player
+        </button>
         {/* Players Table */}
         <table>
           <thead>
@@ -115,7 +113,7 @@ function PlayersPage() {
             ))}
           </tbody>
         </table>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+        <div className="pagination-controls">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}

@@ -1,12 +1,22 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/Homepage.css';
 
-function HomePage() {
+function Homepage() {
   return (
-    <div>
-      <h1>Welcome to Footbee</h1>
-      <p>This is the home page for the Footbee database application.</p>
+    <div className="homepage-container">
+      <div className="hero">
+        <h1>Welcome to Footbee</h1>
+        <p>The ultimate database application for football enthusiasts.</p>
+        <img src='./logo.png' alt="Logo" className="logo" />
+        <Link to="/clubs" className="explore-button">
+          Explore Now
+        </Link>
+      </div>
+      <footer>
+        <p>© 2024 Footbee. All Rights Reserved.</p>
+      </footer>
     </div>
   );
 }
 
-export default HomePage;
+export default Homepage;

@@ -1,0 +1,56 @@
+/* Container for the edit form */
+.edit-player-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styling */
+.edit-player-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-player-form label {
+  color: #333;
+  font-weight: 500;
+}
+
+.edit-player-form input,
+.edit-player-form select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+/* Button container */
+.edit-player-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.edit-player-buttons button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.edit-player-buttons button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-player-buttons button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+} 

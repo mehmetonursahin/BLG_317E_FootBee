@@ -1,0 +1,168 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, green, #084408);
+  background-attachment: fixed; /* This prevents the gradient from repeating */
+  color: white;
+}
+
+/* Update container styles for better contrast */
+.container, 
+.games-page,
+.clubs-page,
+.players-page,
+.competitions-page {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  color: #333; /* Dark text for better readability on light background */
+}
+
+/* Adjust table backgrounds for better contrast */
+table {
+  background-color: white;
+}
+
+/* Update filter panel background */
+.filter-panel {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.add-button {
+  padding: 8px 16px;
+  background-color: #007bff;  /* Changed to match competition button blue */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin: 10px 0;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+.add-button:active {
+  transform: translateY(1px);
+}
+
+.add-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* If you're using icons */
+.add-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-controls button:hover {
+  background: #0056b3;
+}
+
+.pagination-controls button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 0.95rem;
+  color: #495057;
+}
+
+/* Add these styles to your shared.css */
+.edit-form-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #333;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.form-buttons button {
+  padding: 8px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+} 

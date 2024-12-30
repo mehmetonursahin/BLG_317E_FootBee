@@ -1,0 +1,77 @@
+/* Reset and root styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+/* Main container */
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+  position: relative; /* For footer positioning */
+}
+
+/* Hero section */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  text-align: center;
+  min-height: calc(100vh - 60px); /* Viewport height minus footer height */
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+/* Footer */
+footer {
+  height: 60px; /* Fixed height for footer */
+  background-color: #333;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+/* Explore button */
+.explore-button {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  background-color: white;
+  color: green;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none; /* Remove link underline */
+  display: inline-block; /* Ensure padding works properly */
+}
+
+.explore-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  text-decoration: none; /* Ensure no underline on hover */
+}

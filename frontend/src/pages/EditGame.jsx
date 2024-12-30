@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/shared.css';
 
 const EditGame = () => {
   const { gameId } = useParams();
@@ -69,7 +70,7 @@ const EditGame = () => {
   return (
     <div>
       <h1>Edit Game</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="edit-form">
         {Object.keys(formData).map((key) => (
           <div key={key}>
             <label>

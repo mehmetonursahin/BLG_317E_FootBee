@@ -1,0 +1,46 @@
+/* Navbar styles */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: green; /* Dark background */
+    color: black;
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Logo Section */
+  .navbar-logo img {
+    height: 70px; /* Adjust logo size */
+    width: auto;
+  }
+  
+  .navbar-logo a {
+    text-decoration: none;
+  }
+  
+  /* Navigation Menu */
+  .navbar-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Spacing between menu items */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-menu li a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .navbar-menu li a:hover {
+    text-decoration: underline;
+  }
+  

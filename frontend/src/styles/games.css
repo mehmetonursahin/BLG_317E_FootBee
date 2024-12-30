@@ -1,0 +1,70 @@
+.games-list {
+  width: 95%;
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.games-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.games-list th,
+.games-list td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.games-list th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+
+.games-list tr:last-child td {
+  border-bottom: none;
+}
+
+.games-list tr:hover {
+  background-color: #888888;
+}
+
+/* Column-specific widths */
+.games-list th:nth-child(1),
+.games-list td:nth-child(1) {  /* Home Team */
+  width: 20%;
+}
+
+.games-list th:nth-child(2),
+.games-list td:nth-child(2) {  /* Score */
+  width: 10%;
+  text-align: center;
+}
+
+.games-list th:nth-child(3),
+.games-list td:nth-child(3) {  /* Away Team */
+  width: 20%;
+}
+
+.games-list th:nth-child(4),
+.games-list td:nth-child(4) {  /* Date */
+  width: 15%;
+}
+
+.games-list th:nth-child(5),
+.games-list td:nth-child(5) {  /* Referee */
+  width: 15%;
+}
+
+.games-list th:nth-child(6),
+.games-list td:nth-child(6) {  /* Stadium */
+  width: 15%;
+} 
