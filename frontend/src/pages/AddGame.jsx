@@ -280,6 +280,7 @@ const styles = {
     flexWrap: "wrap",
     maxHeight: "800px",
     gap: "1rem",
+    alignContent: "center",
   },
   input: {
     padding: "0.8rem",

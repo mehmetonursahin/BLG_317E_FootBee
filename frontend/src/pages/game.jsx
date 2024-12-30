@@ -98,64 +98,87 @@ const GamePage = () => {
       </div>
 
       {activeTab === "overview" && game && (
-        <div className="wrapper">
-          <div className="game-details">
-            <h1>
-              {game.home_club_name} <span>vs</span> {game.away_club_name}
-            </h1>
-            <p>
-              <strong>Competition:</strong> {game.competition_id} (
-              {game.competition_type.trim()})
-            </p>
-            <p>
-              <strong>Date:</strong> {game.date}
-            </p>
-            <p>
-              <strong>Score:</strong> {game.home_club_goals} -{" "}
-              {game.away_club_goals} (Aggregate: {game.aggregate})
-            </p>
-            <p>
-              <strong>Attendance:</strong> {game.attendance}
-            </p>
-            <p>
-              <strong>Venue:</strong> {game.stadium}
-            </p>
-            <p>
-              <strong>Referee:</strong> {game.referee}
-            </p>
-            <p>
-              <strong>Round:</strong> {game.round}
-            </p>
-            <p>
-              <strong>Season:</strong> {game.season}
-            </p>
-            <h2>Home Club</h2>
-            <p>
-              <strong>Name:</strong> {game.home_club_name}
-            </p>
-            <p>
-              <strong>Manager:</strong> {game.home_club_manager_name}
-            </p>
-            <p>
-              <strong>Position:</strong> {game.home_club_position}
-            </p>
-            <h2>Away Club</h2>
-            <p>
-              <strong>Name:</strong> {game.away_club_name}
-            </p>
-            <p>
-              <strong>Manager:</strong> {game.away_club_manager_name}
-            </p>
-            <p>
-              <strong>Position:</strong> {game.away_club_position}
-            </p>
-            <p>
-              <strong>Match Report:</strong>{" "}
-              <a href={game.url} target="_blank" rel="noopener noreferrer">
-                View Report
-              </a>
-            </p>
-          </div>
+        <div>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              marginBottom: "2rem",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+            }}
+          >
+            <tbody>
+              <tr>
+                <td style={tableCellStyle}>Home Club:</td>
+                <td>{game.home_club_name}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Away Club:</td>
+                <td>{game.away_club_name}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Competition:</td>
+                <td>
+                  {game.competition_id} ({game.competition_type.trim()})
+                </td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Date:</td>
+                <td>{game.date}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Score:</td>
+                <td>
+                  {game.home_club_goals} - {game.away_club_goals} (Aggregate:{" "}
+                  {game.aggregate})
+                </td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Attendance:</td>
+                <td>{game.attendance}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Venue:</td>
+                <td>{game.stadium}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Referee:</td>
+                <td>{game.referee}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Round:</td>
+                <td>{game.round}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Season:</td>
+                <td>{game.season}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Home Club Manager:</td>
+                <td>{game.home_club_manager_name}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Home Club Position:</td>
+                <td>{game.home_club_position}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Away Club Manager:</td>
+                <td>{game.away_club_manager_name}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Away Club Position:</td>
+                <td>{game.away_club_position}</td>
+              </tr>
+              <tr>
+                <td style={tableCellStyle}>Match Report:</td>
+                <td>
+                  <a href={game.url} target="_blank" rel="noopener noreferrer">
+                    View Report
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           <GameEvents events={gameEvents} game={game}></GameEvents>
         </div>
@@ -393,6 +416,10 @@ const GamePage = () => {
     </div>
   );
 };
+const tableCellStyle = {
+  padding: "8px 12px",
+  border: "1px solid #ddd",
+  };
 const styles = {
   container: {
     padding: "20px",
@@ -408,6 +435,7 @@ const styles = {
     flexDirection: "column",
     flexWrap: "wrap",
     maxHeight: "800px",
+    alignContent: "center",
     gap: "1rem",
   },
   input: {

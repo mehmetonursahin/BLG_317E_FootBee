@@ -92,10 +92,14 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
+  
 }
 
 .event-row:hover .event-actions {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
 }
 
@@ -120,3 +124,4 @@
 .edit-button:hover, .delete-button:hover {
   opacity: 0.8;
 }
+

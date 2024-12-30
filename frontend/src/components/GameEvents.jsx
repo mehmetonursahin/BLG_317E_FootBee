@@ -75,7 +75,7 @@ const GameEvents = ({ events, game }) => {
       case "Substitutions":
         return (
           <span className="event-icon">
-            <img src="https://www.mackolik.com/img/substitution.2be0be96e1.svg"></img>
+            <img src="https://www.mackolik.com/img/substitution.2be0be96e1.svg" alt="Substitutions Icon" ></img>
           </span>
         );
       default:
@@ -103,7 +103,8 @@ const GameEvents = ({ events, game }) => {
   };
   return (
     <div className="relative-div">
-      <div >
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems : "center", margin: "1rem"}}>
+      <h3> Game Events</h3>
         <button className="create-button" style={styles.submitButton} onClick={() => handleOpenAddModal()}>
           Create Game Event
         </button>
@@ -216,7 +217,6 @@ const styles = {
     fontSize: "1rem",
     cursor: "pointer",
     transition: "background-color 0.3s ease",
-    marginTop: "20px",
   },
   cancelButton: {
     padding: "0.8rem",
