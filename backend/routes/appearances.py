@@ -1,7 +1,7 @@
 
 from flask import Blueprint, request, jsonify
 from db.connection import get_db
-
+from routes.helper import *
 bp = Blueprint('appearances', __name__)
 
 # GET: Belirli bir oyuncunun appearances listesini al
@@ -26,47 +26,94 @@ def get_appearances(player_id):
 # POST: Yeni bir appearance ekle
 @bp.route('/', methods=['POST'])
 def add_appearance():
-    data = request.json
+    data = request.json 
+
     db = get_db()
     cursor = db.cursor()
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
+    # Dinamik olarak sütunları ve değerleri oluştur
+    columns = []
+    values = []
+    placeholders = []
+
+    for key, value in data.items():
+        columns.append(key)
+        placeholders.append(f"%({key})s") 
+        values.append(value)
+
+    if not columns:
+        return jsonify({'error': 'No fields to insert'}), 400
+
+    query = f"""
+        INSERT INTO appearances ({', '.join(columns)})
+        VALUES ({', '.join(placeholders)})
+    """
+
     try:
-        cursor.execute("""
-            INSERT INTO appearances (
-                appearance_id, game_id, player_id, player_club_id, player_current_club_id,
-                date, player_name, competition_id, yellow_cards, red_cards,
-                goals, assists, minutes_played
-            ) VALUES (
-                %(appearance_id)s, %(game_id)s, %(player_id)s, %(player_club_id)s, %(player_current_club_id)s,
-                %(date)s, %(player_name)s, %(competition_id)s, %(yellow_cards)s, %(red_cards)s,
-                %(goals)s, %(assists)s, %(minutes_played)s
-            )
-        """, data)
+        cursor.execute(query, data)
         db.commit()
         return jsonify({'message': 'Appearance added successfully'}), 201
     except Exception as e:
+        print(f"SQL Error: {e}")
         db.rollback()
         return jsonify({'error': str(e)}), 400
     finally:
         cursor.close()
         db.close()
 
-# PUT: Var olan bir appearance'ı güncelle
-@bp.route('/<int:appearance_id>', methods=['PUT'])
-def update_appearance(appearance_id):
-    data = request.json
+
+@bp.route('/<string:appearance_id>', methods=['GET'])
+def get_appearance(appearance_id):
     db = get_db()
     cursor = db.cursor()
     try:
-        cursor.execute("""
-            UPDATE appearances
-            SET
-                game_id = %(game_id)s, player_id = %(player_id)s, player_club_id = %(player_club_id)s,
-                player_current_club_id = %(player_current_club_id)s, date = %(date)s,
-                player_name = %(player_name)s, competition_id = %(competition_id)s,
-                yellow_cards = %(yellow_cards)s, red_cards = %(red_cards)s,
-                goals = %(goals)s, assists = %(assists)s, minutes_played = %(minutes_played)s
-            WHERE appearance_id = %s
-        """, {**data, 'appearance_id': appearance_id})
+        cursor.execute("SELECT * FROM appearances WHERE appearance_id = %s", (appearance_id,))
+        appearance = cursor.fetchone()
+        if appearance:
+            # Eğer tablo sütunları belirliyse, bunları JSON objesine dönüştürün
+            columns = [column[0] for column in cursor.description]
+            result = dict(zip(columns, appearance))
+            return jsonify(result), 200
+        else:
+            return jsonify({'error': 'Appearance not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    finally:
+        cursor.close()
+        db.close()
+
+
+# PUT: Var olan bir appearance'ı güncelle
+@bp.route('/<string:appearance_id>', methods=['PUT'])
+def update_appearance(appearance_id):
+    data = request.json  # Gelen JSON verisi
+    db = get_db()
+    cursor = db.cursor()
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
+    columns_to_update = []
+    params = {}
+
+    for key, value in data.items():
+        columns_to_update.append(f"{key} = %({key})s")  
+        params[key] = value  # Parametreleri doldur
+
+    if not columns_to_update:
+        return jsonify({'error': 'No fields to update'}), 400
+
+    query = f"""
+        UPDATE appearances
+        SET {', '.join(columns_to_update)}
+        WHERE appearance_id = %(appearance_id)s
+    """
+    params['appearance_id'] = appearance_id
+
+    try:
+        # SQL sorgusunu çalıştır
+        cursor.execute(query, params)
         db.commit()
         return jsonify({'message': 'Appearance updated successfully'}), 200
     except Exception as e:
@@ -76,8 +123,9 @@ def update_appearance(appearance_id):
         cursor.close()
         db.close()
 
+
 # DELETE: Bir appearance'ı sil
-@bp.route('/<int:appearance_id>', methods=['DELETE'])
+@bp.route('/<string:appearance_id>', methods=['DELETE'])
 def delete_appearance(appearance_id):
     db = get_db()
     cursor = db.cursor()
@@ -91,3 +139,4 @@ def delete_appearance(appearance_id):
     finally:
         cursor.close()
         db.close()
+

@@ -78,6 +78,7 @@ def create_player():
         db.commit()
         return jsonify({'message': 'Player created successfully', 'id': cursor.lastrowid}), 201
     except Exception as e:
+        print(f"SQL Error: {e}")
         db.rollback()
         return jsonify({'error': str(e)}), 400
     finally:
@@ -106,6 +107,7 @@ def update_player(player_id):
         db.commit()
         return jsonify({'message': 'Player updated successfully'}), 201
     except Exception as e:
+        print(f"SQL Error: {e}")
         db.rollback()
         return jsonify({'error': str(e)}), 400
     finally:

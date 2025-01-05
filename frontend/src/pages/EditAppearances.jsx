@@ -7,14 +7,19 @@ function EditAppearancePage() {
   const { appearanceId, playerId } = useParams();
 
   const [appearance, setAppearance] = useState({
-    game_id: "",
+    appearance_id: "",
+    assists: 0,
     competition_id: "",
     date: "",
+    game_id: 0,
     goals: 0,
-    assists: 0,
     minutes_played: 0,
-    yellow_cards: 0,
+    player_club_id: 0,
+    player_current_club_id: 0,
+    player_id: 0,
+    player_name: "",
     red_cards: 0,
+    yellow_cards: 0
   });
 
   // Backend'den mevcut appearance'ı al
@@ -22,12 +27,16 @@ function EditAppearancePage() {
     const fetchAppearance = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:8080/appearances/${appearanceId}`);
+        
         if (!response.ok) {
           throw new Error("Failed to fetch appearance");
         }
         const data = await response.json();
+        
         setAppearance(data);
+
       } catch (error) {
+        
         console.error("Error fetching appearance:", error);
         alert("Error fetching appearance details");
       }
@@ -58,6 +67,7 @@ function EditAppearancePage() {
       });
 
       if (response.ok) {
+        console.log(appearance)
         alert("Appearance updated successfully!");
         navigate(`/players/${playerId}`); // Oyuncu detay sayfasına geri yönlendir
       } else {

@@ -39,7 +39,7 @@ function PlayerDetail() {
     const fetchPlayer = async () => {
 
       try {
-        const response = await fetch(`http://localhost:8080/players/${playerId}`);
+        const response = await fetch(`http://127.0.0.1:8080/players/${playerId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch player data");
         }
@@ -76,11 +76,18 @@ function PlayerDetail() {
       // PUT isteğinde, tablo alanlarının tamamını backend’in beklediği şekilde gönderiyoruz.
       // Ayrıca player_id’yi de göndereceğiz ancak backend bunu URL parametresinden alıyor.
       // Bazı backend kodlarında body’de `player_id` isteniyorsa, ekleyebilirsin.
-      const payload = {
-        ...formData
+      const {appearances,...payload} = {
+        ...formData,
+        current_club_id: formData.current_club_id
+          ? Number(formData.current_club_id)
+          : null, // Sayısal alanlar dönüştürülüyor
+        last_season: formData.last_season ? Number(formData.last_season) : null,
+        height_in_cm: formData.height_in_cm
+          ? Number(formData.height_in_cm)
+          : null, // Opsiyonel alanlar için null değeri
       };
 
-      const response = await fetch(`http://localhost:8080/players/${playerId}`, {
+      const response = await fetch(`http://161.9.117.190:8080/players/${playerId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -108,14 +115,14 @@ function PlayerDetail() {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:8080/players/${playerId}`, {
+      const response = await fetch(`http://127.0.0.1:8080/players/${playerId}`, {
         method: "DELETE",
       });
       if (!response.ok) {
         throw new Error("Failed to delete player");
       }
       alert("Player deleted successfully!");
-      navigate("/");
+      navigate("/players");
     } catch (err) {
       console.error(err);
       alert("Error deleting player");
@@ -128,7 +135,7 @@ function PlayerDetail() {
   const handleDeleteAppearance = async (appearanceId) => {
     if (window.confirm("Are you sure you want to delete this appearance?")) {
       try {
-        const response = await fetch(`http://localhost:8080/appearances/${appearanceId}`, {
+        const response = await fetch(`http://127.0.0.1:8080/appearances/${appearanceId}`, {
           method: "DELETE",
         });
         if (!response.ok) {
@@ -141,7 +148,8 @@ function PlayerDetail() {
           appearances: prevData.appearances.filter((a) => a.appearance_id !== appearanceId),
         }));
       } catch (error) {
-        console.error(error);
+        console.log(error);
+        console.log("test")
         alert("Error deleting appearance");
       }
     }
@@ -233,7 +241,7 @@ function PlayerDetail() {
         <div>
           <button
             className="edit-button"
-            onClick={() => handleEditAppearance(appearance)}
+            onClick={() => handleEditAppearance(appearance.appearance_id)}
           >
             Edit
           </button>
